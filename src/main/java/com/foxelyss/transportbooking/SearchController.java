@@ -38,7 +38,39 @@ public class SearchController {
         }
     }
     @GetMapping("/points")
-    public Point[] hello(@RequestParam(value = "name", defaultValue = "Томск") String name) {
+    public ArrayList<Point> hello(@RequestParam(value = "name", defaultValue = "Томск") String name) {
+        String sequel = """
+                select * from point
+                where point.city like "%?%"
+                """;
+        ArrayList<Point> m  =  new ArrayList<>();
+        try
+                (
+                        // create a database connection
+                        Connection connection = DriverManager.getConnection("jdbc:sqlite:database.db");
+                        Statement statement = connection.createStatement();
+                )
+        {
+            statement.setQueryTimeout(30);  // set timeout to 30 sec.
+            PreparedStatement preparedStatement = connection.prepareStatement(sequel);
+            preparedStatement.setString(1, name);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while(resultSet.next())
+            {
+                int id;String name_a;String region;String town;
+                id = resultSet.getInt("id");
+                town = resultSet.getString("city");
+                region = resultSet.getString("city");
+                m.add(new Point(id,"asd",region,town));
+            }
+        }
+        catch(SQLException e)
+        {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            e.printStackTrace(System.err);
+        }
         Point points[];
 
         points = new Point[5];
@@ -48,10 +80,10 @@ public class SearchController {
         points[3] =new Point(1,"Новосибирск","123","1231");
         points[4] =new Point(1,"Зеленоград","123","1231");
 
-        return  points;
+        return  m;
     }
     @GetMapping("/search")
-    public Transporting[] m(@RequestParam(value = "point_a") int point_a,@RequestParam(value = "point_b") int point_b,@RequestParam(value = "quantity", defaultValue = "1") int quantity) {
+    public ArrayList<Transporting> m(@RequestParam(value = "point_a") int point_a,@RequestParam(value = "point_b") int point_b,@RequestParam(value = "quantity", defaultValue = "1") int quantity) {
         ArrayList<Transporting> m = new ArrayList<>();
         int quan = 0;
 
@@ -64,9 +96,9 @@ public class SearchController {
                 a2.region||' '|| a2.city AS end_point,
                 company.name as company_name
                 from transportation
-                join company on transportation.company =company.id\s
-                join point as a1 on transportation.departurepoint  =a1.id\s
-                join point as a2 on transportation.arrivalpoint  =a2.id\s
+                join company on transportation.company =company.id
+                join point as a1 on transportation.departurepoint  =a1.id
+                join point as a2 on transportation.arrivalpoint  =a2.id
                 """;
         try
                 (
@@ -93,6 +125,7 @@ name = rs.getString("name");
 m.add(new Transporting(id,name,start,end,start_point,end_point));
                 quan++;
             }
+
         }
         catch(SQLException e)
         {
@@ -103,12 +136,13 @@ m.add(new Transporting(id,name,start,end,start_point,end_point));
 
 
 
-        m = new Transporting[quantity];
-        m[0] =  new Transporting(0, "M-315",
-                new Timestamp(112,1,2,5,2,3,0),
-                new Timestamp(112,5,2,12,2,3,0),"Томск-1","");
+//        m = new Transporting[quantity];
+//        m[0] =  new Transporting(0, "M-315",
+//                new Timestamp(112,1,2,5,2,3,0),
+//                new Timestamp(112,5,2,12,2,3,0),"Томск-1","");
 
-        return m;
+//        return m;
+        return  m;
     }
 
     @GetMapping("/companies")
