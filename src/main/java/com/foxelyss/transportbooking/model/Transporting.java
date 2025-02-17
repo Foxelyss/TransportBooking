@@ -1,4 +1,4 @@
-package com.foxelyss.transportbooking;
+package com.foxelyss.transportbooking.model;
 
 import java.sql.Timestamp;
 
