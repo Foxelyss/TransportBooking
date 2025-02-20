@@ -24,6 +24,7 @@ create table TransportingMeans (
 
 create table Point (
     id INTEGER primary key,
+    name CHAR(128) not null,
     region CHAR(128) not null,
     city CHAR(128) not null
 );

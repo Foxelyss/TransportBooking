@@ -21,35 +21,35 @@ public class BusinessController {
     @Autowired
     PointService pointService;
 
-    @GetMapping("/checks")
-    public ArrayList<Transporting> searchForTransport(@RequestParam(value = "point_a") int point_a,
-                                                      @RequestParam(value = "point_b") int point_b,
-                                                      @RequestParam(value = "quantity", defaultValue = "1") int quantity) {
+    @GetMapping("/tickets")
+    public ArrayList<Transporting> GetTicketsForUser(@RequestParam(value = "point_a") int point_a,
+                                                     @RequestParam(value = "point_b") int point_b,
+                                                     @RequestParam(value = "quantity", defaultValue = "1") int quantity) {
         return null;
     }
 
 
     @GetMapping("/add_transport")
-    public String pa(@RequestParam(value = "name", defaultValue = "World") String name) {
+    public String AddTransporting(@RequestParam(value = "name", defaultValue = "World") String name) {
 
         transportService.createItem(new Transporting(0, "", new Timestamp(123123123), new Timestamp(123123123), "", "", 1, 2));
         return "";
     }
 
     @GetMapping("/add_point")
-    public String pa2(@RequestParam(value = "name", defaultValue = "World") String name) {
+    public String AddPoint(@RequestParam(value = "name", defaultValue = "World") String name) {
 
         pointService.createItem(new Point(0, null, "Омская область", "фывф"));
         return "";
     }
 
-    @GetMapping("/buy_check")
-    public String pa22(@RequestParam(value = "name", defaultValue = "World") String name) {
+    @GetMapping("/buy_ticket")
+    public String BuyTicket(@RequestParam(value = "name", defaultValue = "World") String name) {
         return "";
     }
 
     @GetMapping("/add_official")
-    public String pa12(@RequestParam(value = "name", defaultValue = "World") String name) {
+    public String AddOfficial(@RequestParam(value = "name", defaultValue = "World") String name) {
         return "";
     }
 }
