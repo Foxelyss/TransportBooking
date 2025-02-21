@@ -1,15 +1,17 @@
 package com.foxelyss.transportbooking.repos;
 
 import com.foxelyss.transportbooking.model.Transporting;
+import com.foxelyss.transportbooking.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public class TransportRepo {
+public class UserRepo {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -22,6 +24,11 @@ public class TransportRepo {
             return null;
         });
     }
+
+    public Optional<User> findByUsername(String username) {
+        return null;
+    }
+
 
     public Transporting findById(Long id) {
         String sql = "SELECT * FROM items WHERE id = ?";
@@ -62,6 +69,7 @@ public class TransportRepo {
                 where a1.id = ? and a2.id = ?
                 """;
 
+
         return jdbcTemplate.query(sequel, new Object[]{dep_point, arr_point}, (rs, rowNum) -> {
             int id;
             String name;
@@ -75,7 +83,7 @@ public class TransportRepo {
             end = rs.getTimestamp("arrival");
             start_point = rs.getString("start_point");
             end_point = rs.getString("end_point");
-            return new Transporting(id, name, start, end, start_point, end_point, 1, 1, 12);
+            return new Transporting(id, name, start, end, start_point, end_point, 1, 1);
         });
     }
 }

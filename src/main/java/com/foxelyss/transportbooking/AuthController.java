@@ -1,10 +1,14 @@
 package com.foxelyss.transportbooking;
 
 import com.foxelyss.transportbooking.model.Point;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.foxelyss.transportbooking.service.AuthService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,28 +16,23 @@ import java.util.ArrayList;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
-    @GetMapping("/register_company")
-    public String searchForPoint(@RequestParam(value = "point", defaultValue = "Томск") String point) {
+    @Autowired
+    private AuthService userService;
 
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody AuthRequest request) {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
 
-        return "";
+            // Генерация JWT токена (реализация не показана)
+            String token = generateToken(authentication);
+            return ResponseEntity.ok(new AuthResponse(token));
+        } catch (BadCredentialsException e) {
+            return ResponseEntity.badRequest().body("Invalid credentials");
+        }
     }
-
-    @GetMapping("/register")
-    public String p(@RequestParam(value = "name", defaultValue = "World") String name) {
-        return String.format("Hello %s!", name);
-    }
-
-    @GetMapping("/validate_token")
-    public String p3(@RequestParam(value = "name", defaultValue = "World") String name) {
-        return String.format("Hello %s!", name);
-    }
-
-    @GetMapping("/login")
-    public String p23(@RequestParam(value = "name", defaultValue = "World") String name) {
-        return String.format("Hello %s!", name);
-    }
-
 }
-;
