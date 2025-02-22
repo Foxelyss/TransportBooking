@@ -32,7 +32,7 @@ public class BusinessController {
     @GetMapping("/add_transport")
     public String AddTransporting(@RequestParam(value = "name", defaultValue = "World") String name) {
 
-        transportService.createItem(new Transporting(0, "", new Timestamp(123123123), new Timestamp(123123123), "", "", 1, 2));
+        transportService.createItem(new Transporting(0, "", new Timestamp(123123123), new Timestamp(123123123), "", "", 1, 2, 2));
         return "";
     }
 

@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/about")
-public class DataMarshaller{
+public class DataController {
     @GetMapping("/transport")
     public Company p12a(@RequestParam(value = "name", defaultValue = "World") String name) {
-        return new Company(1,"123","123","123");
+        return new Company(1, "123", "123", "123");
     }
 
     @GetMapping("/company")
     public Company p1a(@RequestParam(value = "name", defaultValue = "World") String name) {
-        return new Company(1,"123","123","123");
+        return new Company(1, "123", "123", "123");
     }
 }

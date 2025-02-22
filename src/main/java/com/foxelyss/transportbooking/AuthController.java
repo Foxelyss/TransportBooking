@@ -29,7 +29,7 @@ public class AuthController {
                     new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
 
             // Генерация JWT токена (реализация не показана)
-            String token = generateToken(authentication);
+            String token = new JwtUtil().generateToken(authentication);
             return ResponseEntity.ok(new AuthResponse(token));
         } catch (BadCredentialsException e) {
             return ResponseEntity.badRequest().body("Invalid credentials");
