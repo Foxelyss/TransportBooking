@@ -16,8 +16,8 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 @RestController
-@RequestMapping("/api/business")
-public class BusinessController {
+@RequestMapping("/api/admin")
+public class AdministrationController {
     @Autowired
     TransportService transportService;
     @Autowired
@@ -25,11 +25,20 @@ public class BusinessController {
     @Autowired
     BookService traasdnsportService;
 
-    @GetMapping("/add_transport")
-    public String AddTransporting(@RequestParam(value = "name", defaultValue = "World") String name) {
+    @GetMapping("/add_point")
+    public String AddPoint(@RequestParam(value = "name", defaultValue = "World") String name) {
 
-        // transportService.createItem(new Transporting(0, "", new Timestamp(123123123),
-        // new Timestamp(1233231223123123L), "", "", 1, 2, 2, "", ""));
+        pointService.createItem(new Point(0, null, "Омская область", "фывф"));
+        return "";
+    }
+
+    @GetMapping("/create_company")
+    public String CreateCompany(@RequestParam(value = "name", defaultValue = "World") String name) {
+        return "";
+    }
+
+    @GetMapping("/delete_company")
+    public String DeleteCompany(@RequestParam(value = "name", defaultValue = "World") String name) {
         return "";
     }
 }

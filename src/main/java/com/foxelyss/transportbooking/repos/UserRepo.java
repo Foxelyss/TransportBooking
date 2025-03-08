@@ -53,37 +53,4 @@ public class UserRepo {
     }
 
 
-    public List<Transporting> findByDest(int dep_point, int arr_point) {
-        String sequel = """
-                select transportation.id,
-                transportation.name,
-                transportation.arrival,
-                a1.region||' '|| a1.city AS start_point,
-                transportation.departure ,
-                a2.region||' '|| a2.city AS end_point,
-                company.name as company_name
-                from transportation
-                 join company on transportation.company =company.id
-                 join point as a1 on transportation.departurepoint  =a1.id
-                 join point as a2 on transportation.arrivalpoint  =a2.id
-                where a1.id = ? and a2.id = ?
-                """;
-
-
-        return jdbcTemplate.query(sequel, new Object[]{dep_point, arr_point}, (rs, rowNum) -> {
-            int id;
-            String name;
-            Timestamp start;
-            Timestamp end;
-            String start_point;
-            String end_point;
-            id = rs.getInt("id");
-            name = rs.getString("name");
-            start = rs.getTimestamp("departure");
-            end = rs.getTimestamp("arrival");
-            start_point = rs.getString("start_point");
-            end_point = rs.getString("end_point");
-            return new Transporting(id, name, start, end, start_point, end_point, 1, 1);
-        });
-    }
 }

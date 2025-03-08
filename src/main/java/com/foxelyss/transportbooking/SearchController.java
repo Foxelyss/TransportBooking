@@ -22,7 +22,7 @@ public class SearchController {
 
     @GetMapping("/point")
     public Point searchForPoint(@RequestParam(value = "point", defaultValue = "Томск") String point) {
-        return pointRepo.findByName("Томск");
+        return pointRepo.findByName(point);
     }
 
     @GetMapping("/points")
@@ -32,8 +32,8 @@ public class SearchController {
 
     @GetMapping("/search")
     public List<Transporting> searchForTransport(@RequestParam(value = "point_a") int point_a,
-                                                 @RequestParam(value = "point_b") int point_b,
-                                                 @RequestParam(value = "quantity", defaultValue = "1") int quantity) {
+            @RequestParam(value = "point_b") int point_b,
+            @RequestParam(value = "quantity", defaultValue = "1") int quantity) {
         return itemService.findByDest(point_a, point_b);
     }
 }

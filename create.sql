@@ -1,35 +1,22 @@
-create table Official (
-    id INTEGER primary key,
-    phone CHAR(32) not null,
-    firstname CHAR(32) not null,
-    surname CHAR(32) not null,
-    lastname CHAR(32) not null,
-    position CHAR(32) not null
-);
-
 create table Company (
     id INTEGER primary key,
     name CHAR(128) not null,
     inn CHAR(128) not null,
     registration_address CHAR(128) not null,
     phone CHAR(128) not null,
-    official INTEGER references official (id)
+    token_date date,
+    token char(255)
 );
-
-
 create table TransportingMeans (
     id INTEGER primary key,
     name CHAR(128) not null
 );
-
 create table Point (
     id INTEGER primary key,
     name CHAR(128) not null,
     region CHAR(128) not null,
     city CHAR(128) not null
 );
-
-
 create table Transportation (
     id INTEGER primary key,
     name CHAR(128) not null,
@@ -43,21 +30,17 @@ create table Transportation (
     place_count UNSIGNED not null,
     free_place_count UNSIGNED not null
 );
-
 create table Passenger (
-    id INTEGER primary key,
-    phone CHAR(32) not null,
+    passport BIGINT primary key,
+    phone bigint not null,
     email CHAR(128) not null,
     firstname CHAR(32) not null,
     surname CHAR(32) not null,
-    lastname CHAR(32),
-    passport BIGINT not null
+    lastname CHAR(32)
 );
-
 create table book (
     id INTEGER primary key,
-    passenger INTEGER references passenger (id),
-    place UNSIGNED not null,
+    passenger bigint references passenger (passport),
     payment CHAR(128) not null,
     price FLOAT(2) not null,
     transportation INTEGER references transportation (id)

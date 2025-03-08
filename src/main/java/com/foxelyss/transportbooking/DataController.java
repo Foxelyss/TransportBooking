@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/about")
 public class DataController {
     @GetMapping("/transport")
-    public Company p12a(@RequestParam(value = "name", defaultValue = "World") String name) {
+    public Company GetTransportInfo(@RequestParam(value = "name", defaultValue = "World") String name) {
         return new Company(1, "123", "123", "123");
     }
 
     @GetMapping("/company")
-    public Company p1a(@RequestParam(value = "name", defaultValue = "World") String name) {
+    public Company GetCompanyInfo(@RequestParam(value = "name", defaultValue = "World") String name) {
         return new Company(1, "123", "123", "123");
     }
 }

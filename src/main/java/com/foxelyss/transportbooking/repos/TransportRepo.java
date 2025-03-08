@@ -16,19 +16,19 @@ public class TransportRepo {
     public List<Transporting> findAll() {
         String sql = "SELECT * FROM items";
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
-//            Item item = new Item();
-//            item.setId(rs.getLong("id"));
-//            item.setName(rs.getString("name"));
+            // Item item = new Item();
+            // item.setId(rs.getLong("id"));
+            // item.setName(rs.getString("name"));
             return null;
         });
     }
 
     public Transporting findById(Long id) {
         String sql = "SELECT * FROM items WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[]{id}, (rs, rowNum) -> {
-//            Transporting item = new Transporting();
-//            item.setId(rs.getLong("id"));
-//            item.setName(rs.getString("name"));
+        return jdbcTemplate.queryForObject(sql, new Object[] { id }, (rs, rowNum) -> {
+            // Transporting item = new Transporting();
+            // item.setId(rs.getLong("id"));
+            // item.setName(rs.getString("name"));
             return null;
         });
     }
@@ -41,28 +41,29 @@ public class TransportRepo {
     public int deleteById(Long id) {
         String sql = "DELETE FROM items WHERE id = ?";
         return jdbcTemplate.update(sql, id);
-
-
     }
-
 
     public List<Transporting> findByDest(int dep_point, int arr_point) {
         String sequel = """
                 select transportation.id,
-                transportation.name,
-                transportation.arrival,
-                a1.region||' '|| a1.city AS start_point,
-                transportation.departure ,
-                a2.region||' '|| a2.city AS end_point,
-                company.name as company_name
-                from transportation
-                 join company on transportation.company =company.id
-                 join point as a1 on transportation.departurepoint  =a1.id
-                 join point as a2 on transportation.arrivalpoint  =a2.id
+                                transportation.name,
+                                transportation.arrival,
+                                transportation.place_count,
+                                transportation.free_place_count,
+                                a1.region||' '|| a1.city AS start_point,
+                                transportation.departure ,
+                                a2.region||' '|| a2.city AS end_point,
+                                company.name as company_name,
+                                transportingmeans.name as mean
+                                from transportation
+                                inner join company on transportation.company =company.id
+                                inner join point as a1 on transportation.departure_point  =a1.id
+                                inner join point as a2 on transportation.arrival_point  =a2.id
+                inner join transportingmeans on transportation.transporting_mean=transportingmeans.id
                 where a1.id = ? and a2.id = ?
                 """;
 
-        return jdbcTemplate.query(sequel, new Object[]{dep_point, arr_point}, (rs, rowNum) -> {
+        return jdbcTemplate.query(sequel, new Object[] { dep_point, arr_point }, (rs, rowNum) -> {
             int id;
             String name;
             Timestamp start;
@@ -75,7 +76,9 @@ public class TransportRepo {
             end = rs.getTimestamp("arrival");
             start_point = rs.getString("start_point");
             end_point = rs.getString("end_point");
-            return new Transporting(id, name, start, end, start_point, end_point, 1, 1, 12);
+            System.out.println(end);
+            return new Transporting(id, name, start, end, start_point, end_point, 1, 1, 12, rs.getString("mean"),
+                    rs.getString("company_name"), rs.getInt("place_count"), rs.getInt("free_place_count"));
         });
     }
 }
