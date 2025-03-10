@@ -30,7 +30,7 @@ public class TransportService {
         itemRepository.deleteById(id);
     }
 
-    public List<TransportingResult> findByDest(int dep_point, int arr_point) {
-        return itemRepository.findByDest(dep_point, arr_point);
+    public List<TransportingResult> findByDest(int dep_point, int arr_point, int quantity, long wanted_time) {
+        return itemRepository.findByDest(dep_point, arr_point, quantity, wanted_time);
     }
 }

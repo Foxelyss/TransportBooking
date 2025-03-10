@@ -33,8 +33,9 @@ public class SearchController {
     @GetMapping("/search")
     public List<TransportingResult> searchForTransport(@RequestParam(value = "point_a") int point_a,
             @RequestParam(value = "point_b") int point_b,
-            @RequestParam(value = "quantity", defaultValue = "1") int quantity) {
-        return itemService.findByDest(point_a, point_b);
+            @RequestParam(value = "quantity", defaultValue = "15") int quantity,
+            @RequestParam(value = "wanted_time", defaultValue = "0") long wanted_time) {
+        return itemService.findByDest(point_a, point_b, quantity, wanted_time);
     }
 }
 

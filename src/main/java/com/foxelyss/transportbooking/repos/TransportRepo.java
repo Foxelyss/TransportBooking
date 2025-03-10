@@ -44,7 +44,7 @@ public class TransportRepo {
         return jdbcTemplate.update(sql, id);
     }
 
-    public List<TransportingResult> findByDest(int dep_point, int arr_point) {
+    public List<TransportingResult> findByDest(int dep_point, int arr_point, int quantity, long wanted_time) {
         String sequel = """
                 select transportation.id,
                 transportation.name,
@@ -57,30 +57,37 @@ public class TransportRepo {
                 company.name as company_name,
                 transportingmeans.name as mean
                 from transportation
-                inner join company on transportation.company =company.id
-                inner join point as a1 on transportation.departure_point  =a1.id
-                inner join point as a2 on transportation.arrival_point  =a2.id
-                inner join transportingmeans on transportation.transporting_mean=transportingmeans.id
-                where a1.id = ? and a2.id = ?
+                inner join company on transportation.company = company.id
+                inner join point as a1 on transportation.departure_point  = a1.id
+                inner join point as a2 on transportation.arrival_point  = a2.id
+                inner join transportingmeans on transportation.transporting_mean = transportingmeans.id
+                where a1.id = ? and a2.id = ? and departure > unixepoch()
+                ORDER BY ABS(arrival - ?)
+                limit ?
                 """;
+        if (1 < quantity || quantity > 15) {
+            quantity = 15;
+        }
 
-        return jdbcTemplate.query(sequel, new Object[] { dep_point, arr_point }, (rs, rowNum) -> {
-            int id;
-            String name;
-            Timestamp start;
-            Timestamp end;
-            String start_point;
-            String end_point;
-            id = rs.getInt("id");
-            name = rs.getString("name");
-            start = new Timestamp(rs.getLong("departure") * 1000);
-            end = new Timestamp(rs.getLong("arrival") * 1000);
-            start_point = rs.getString("start_point");
-            end_point = rs.getString("end_point");
-            System.out.println(end);
-            return new TransportingResult(id, name, start, end, start_point, end_point, 1, 1, 12, rs.getString("mean"),
-                    rs.getString("company_name"), rs.getInt("place_count"), rs.getInt("free_place_count"));
-        });
+        return jdbcTemplate.query(sequel, new Object[] { dep_point, arr_point, quantity, wanted_time },
+                (rs, rowNum) -> {
+                    int id;
+                    String name;
+                    Timestamp start;
+                    Timestamp end;
+                    String start_point;
+                    String end_point;
+                    id = rs.getInt("id");
+                    name = rs.getString("name");
+                    start = new Timestamp(rs.getLong("departure") * 1000);
+                    end = new Timestamp(rs.getLong("arrival") * 1000);
+                    start_point = rs.getString("start_point");
+                    end_point = rs.getString("end_point");
+
+                    return new TransportingResult(id, name, start, end, start_point, end_point, 1, 1, 12,
+                            rs.getString("mean"),
+                            rs.getString("company_name"), rs.getInt("place_count"), rs.getInt("free_place_count"));
+                });
     }
 
     String sql = """
@@ -99,7 +106,7 @@ public class TransportRepo {
             inner join point as a1 on transportation.departure_point  =a1.id
             inner join point as a2 on transportation.arrival_point  =a2.id
             inner join transportingmeans on transportation.transporting_mean=transportingmeans.id
-            where a1.id = 2 and a2.id = 1 and  departure>=unixepoch()
+            where a1.id = 2 and a2.id = 1 and  departure>unixepoch()
             ORDER BY ABS( arrival - 1745375150)
             """;
 }
