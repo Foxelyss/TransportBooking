@@ -25,7 +25,7 @@ public class BookController {
     @Autowired
     PointService pointService;
     @Autowired
-    BookService traasdnsportService;
+    BookService bookService;
 
     @GetMapping("/books")
     public ArrayList<TransportingResult> GetTicketsForUser(@RequestParam(value = "transporting") long passport) {
@@ -40,7 +40,7 @@ public class BookController {
             @RequestParam(value = "transporting") String email,
             @RequestParam(value = "transporting") long passport,
             @RequestParam(value = "transporting") long phone) {
-        traasdnsportService.createItem(
+        bookService.createItem(
                 new Passenger(phone, email, surname, name, middle_name, passport),
                 new Book(0, 1, 1, "", 1, transporting));
         return "400";

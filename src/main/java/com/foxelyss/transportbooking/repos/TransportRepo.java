@@ -49,6 +49,7 @@ public class TransportRepo {
                 select transportation.id,
                 transportation.name,
                 transportation.arrival,
+                transportation.price,
                 transportation.place_count,
                 transportation.free_place_count,
                 a1.region||' '|| a1.city AS start_point,
@@ -68,26 +69,14 @@ public class TransportRepo {
         if (1 < quantity || quantity > 15) {
             quantity = 15;
         }
-        System.out.println(wanted_time);
 
-        return jdbcTemplate.query(sequel, new Object[] { dep_point, arr_point, wanted_time, quantity },
+        return jdbcTemplate.query(sequel,
                 (rs, rowNum) -> {
-                    int id;
-                    String name;
-                    Timestamp start;
-                    Timestamp end;
-                    String start_point;
-                    String end_point;
-                    id = rs.getInt("id");
-                    name = rs.getString("name");
-                    start = new Timestamp(rs.getLong("departure") * 1000);
-                    end = new Timestamp(rs.getLong("arrival") * 1000);
-                    start_point = rs.getString("start_point");
-                    end_point = rs.getString("end_point");
-
-                    return new TransportingResult(id, name, start, end, start_point, end_point, 1, 1, 12,
-                            rs.getString("mean"),
+                    return new TransportingResult(rs.getInt("id"), rs.getString("name"),
+                            new Timestamp(rs.getLong("departure") * 1000), new Timestamp(rs.getLong("arrival") * 1000),
+                            rs.getString("start_point"), rs.getString("end_point"), arr_point, dep_point,
+                            rs.getFloat("price"), rs.getString("mean"),
                             rs.getString("company_name"), rs.getInt("place_count"), rs.getInt("free_place_count"));
-                });
+                }, dep_point, arr_point, wanted_time, quantity);
     }
 }

@@ -18,16 +18,16 @@ public class SearchController {
     @Autowired
     private TransportService itemService;
     @Autowired
-    private PointService pointRepo;
+    private PointService pointService;
 
     @GetMapping("/point")
     public Point searchForPoint(@RequestParam(value = "point", defaultValue = "Томск") String point) {
-        return pointRepo.findByName(point);
+        return pointService.findByName(point);
     }
 
     @GetMapping("/points")
     public List<Point> searchForPoints() {
-        return pointRepo.getAllItems();
+        return pointService.getAllItems();
     }
 
     @GetMapping("/search")

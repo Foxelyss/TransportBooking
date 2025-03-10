@@ -18,7 +18,7 @@ public class DataController {
     @Autowired
     TransportService transportService;
     @Autowired
-    CompanyRepo comService;
+    CompanyRepo companyService;
 
     @GetMapping("/transport")
     public TransportingResult GetTransportInfo(@RequestParam(value = "id") long id) {
@@ -27,6 +27,6 @@ public class DataController {
 
     @GetMapping("/company")
     public Company GetCompanyInfo(@RequestParam(value = "id") long id) {
-        return comService.findById(id);
+        return companyService.findById(id);
     }
 }

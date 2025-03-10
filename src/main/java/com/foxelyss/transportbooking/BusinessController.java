@@ -24,7 +24,7 @@ public class BusinessController {
     @Autowired
     PointService pointService;
     @Autowired
-    BookService traasdnsportService;
+    BookService bookService;
 
     @GetMapping("/add_transport")
     public String AddTransporting(

@@ -25,7 +25,7 @@ public class AdministrationController {
     @Autowired
     PointService pointService;
     @Autowired
-    CompanyService traasdnsportService;
+    CompanyService companyService;
 
     @GetMapping("/add_point")
     public String AddPoint(
@@ -42,7 +42,7 @@ public class AdministrationController {
             @RequestParam(value = "name") String name,
             @RequestParam(value = "address") String address,
             @RequestParam(value = "inn") String INN) {
-        traasdnsportService.createItem(new Company(-1, name, address, INN));
+        companyService.createItem(new Company(-1, name, address, INN));
         return "";
     }
 }
