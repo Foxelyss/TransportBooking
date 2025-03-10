@@ -47,4 +47,18 @@ public class BookController {
 
     }
 
+    @PostMapping("/return")
+    public String ReturnTicket(@RequestParam(value = "transporting") int transporting,
+            @RequestParam(value = "transporting") String name,
+            @RequestParam(value = "transporting") String surname,
+            @RequestParam(value = "transporting") String middle_name,
+            @RequestParam(value = "transporting") String email,
+            @RequestParam(value = "transporting") long passport,
+            @RequestParam(value = "transporting") long phone) {
+        bookService.createItem(
+                new Passenger(phone, email, surname, name, middle_name, passport),
+                new Book(0, 1, 1, "", 1, transporting));
+        return "400";
+
+    }
 }
