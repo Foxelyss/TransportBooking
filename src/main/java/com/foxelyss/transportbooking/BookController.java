@@ -3,7 +3,7 @@ package com.foxelyss.transportbooking;
 import com.foxelyss.transportbooking.model.Book;
 import com.foxelyss.transportbooking.model.Passenger;
 import com.foxelyss.transportbooking.model.Point;
-import com.foxelyss.transportbooking.model.Transporting;
+import com.foxelyss.transportbooking.model.TransportingResult;
 import com.foxelyss.transportbooking.service.BookService;
 import com.foxelyss.transportbooking.service.PointService;
 import com.foxelyss.transportbooking.service.TransportService;
@@ -28,7 +28,7 @@ public class BookController {
     BookService traasdnsportService;
 
     @GetMapping("/books")
-    public ArrayList<Transporting> GetTicketsForUser(@RequestParam(value = "transporting") long passport) {
+    public ArrayList<TransportingResult> GetTicketsForUser(@RequestParam(value = "transporting") long passport) {
         return null;
     }
 

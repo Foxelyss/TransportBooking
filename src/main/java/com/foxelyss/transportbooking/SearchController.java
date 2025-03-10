@@ -1,7 +1,7 @@
 package com.foxelyss.transportbooking;
 
 import com.foxelyss.transportbooking.model.Point;
-import com.foxelyss.transportbooking.model.Transporting;
+import com.foxelyss.transportbooking.model.TransportingResult;
 import com.foxelyss.transportbooking.service.PointService;
 import com.foxelyss.transportbooking.service.TransportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,7 @@ public class SearchController {
     }
 
     @GetMapping("/search")
-    public List<Transporting> searchForTransport(@RequestParam(value = "point_a") int point_a,
+    public List<TransportingResult> searchForTransport(@RequestParam(value = "point_a") int point_a,
             @RequestParam(value = "point_b") int point_b,
             @RequestParam(value = "quantity", defaultValue = "1") int quantity) {
         return itemService.findByDest(point_a, point_b);

@@ -1,6 +1,7 @@
 package com.foxelyss.transportbooking.repos;
 
 import com.foxelyss.transportbooking.model.Transporting;
+import com.foxelyss.transportbooking.model.TransportingResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -13,7 +14,7 @@ public class TransportRepo {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public List<Transporting> findAll() {
+    public List<TransportingResult> findAll() {
         String sql = "SELECT * FROM items";
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
             // Item item = new Item();
@@ -23,7 +24,7 @@ public class TransportRepo {
         });
     }
 
-    public Transporting findById(Long id) {
+    public TransportingResult findById(Long id) {
         String sql = "SELECT * FROM items WHERE id = ?";
         return jdbcTemplate.queryForObject(sql, new Object[] { id }, (rs, rowNum) -> {
             // Transporting item = new Transporting();
@@ -43,22 +44,22 @@ public class TransportRepo {
         return jdbcTemplate.update(sql, id);
     }
 
-    public List<Transporting> findByDest(int dep_point, int arr_point) {
+    public List<TransportingResult> findByDest(int dep_point, int arr_point) {
         String sequel = """
                 select transportation.id,
-                                transportation.name,
-                                transportation.arrival,
-                                transportation.place_count,
-                                transportation.free_place_count,
-                                a1.region||' '|| a1.city AS start_point,
-                                transportation.departure ,
-                                a2.region||' '|| a2.city AS end_point,
-                                company.name as company_name,
-                                transportingmeans.name as mean
-                                from transportation
-                                inner join company on transportation.company =company.id
-                                inner join point as a1 on transportation.departure_point  =a1.id
-                                inner join point as a2 on transportation.arrival_point  =a2.id
+                transportation.name,
+                transportation.arrival,
+                transportation.place_count,
+                transportation.free_place_count,
+                a1.region||' '|| a1.city AS start_point,
+                transportation.departure ,
+                a2.region||' '|| a2.city AS end_point,
+                company.name as company_name,
+                transportingmeans.name as mean
+                from transportation
+                inner join company on transportation.company =company.id
+                inner join point as a1 on transportation.departure_point  =a1.id
+                inner join point as a2 on transportation.arrival_point  =a2.id
                 inner join transportingmeans on transportation.transporting_mean=transportingmeans.id
                 where a1.id = ? and a2.id = ?
                 """;
@@ -72,13 +73,33 @@ public class TransportRepo {
             String end_point;
             id = rs.getInt("id");
             name = rs.getString("name");
-            start = rs.getTimestamp("departure");
-            end = rs.getTimestamp("arrival");
+            start = new Timestamp(rs.getLong("departure") * 1000);
+            end = new Timestamp(rs.getLong("arrival") * 1000);
             start_point = rs.getString("start_point");
             end_point = rs.getString("end_point");
             System.out.println(end);
-            return new Transporting(id, name, start, end, start_point, end_point, 1, 1, 12, rs.getString("mean"),
+            return new TransportingResult(id, name, start, end, start_point, end_point, 1, 1, 12, rs.getString("mean"),
                     rs.getString("company_name"), rs.getInt("place_count"), rs.getInt("free_place_count"));
         });
     }
+
+    String sql = """
+            select transportation.id,
+            transportation.name,
+            datetime(transportation.arrival,  'auto') ,
+            transportation.place_count,
+            transportation.free_place_count,
+            a1.region||' '|| a1.city AS start_point,
+            transportation.departure ,
+            a2.region||' '|| a2.city AS end_point,
+            company.name as company_name,
+            transportingmeans.name as mean
+            from transportation
+            inner join company on transportation.company =company.id
+            inner join point as a1 on transportation.departure_point  =a1.id
+            inner join point as a2 on transportation.arrival_point  =a2.id
+            inner join transportingmeans on transportation.transporting_mean=transportingmeans.id
+            where a1.id = 2 and a2.id = 1 and  departure>=unixepoch()
+            ORDER BY ABS( arrival - 1745375150)
+            """;
 }

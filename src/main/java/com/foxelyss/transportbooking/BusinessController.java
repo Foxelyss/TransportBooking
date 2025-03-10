@@ -3,6 +3,7 @@ package com.foxelyss.transportbooking;
 import com.foxelyss.transportbooking.model.Book;
 import com.foxelyss.transportbooking.model.Point;
 import com.foxelyss.transportbooking.model.Transporting;
+import com.foxelyss.transportbooking.model.TransportingResult;
 import com.foxelyss.transportbooking.service.BookService;
 import com.foxelyss.transportbooking.service.PointService;
 import com.foxelyss.transportbooking.service.TransportService;
@@ -26,10 +27,19 @@ public class BusinessController {
     BookService traasdnsportService;
 
     @GetMapping("/add_transport")
-    public String AddTransporting(@RequestParam(value = "name", defaultValue = "World") String name) {
+    public String AddTransporting(
+            @RequestParam(value = "name") String name,
+            @RequestParam(value = "departure") Timestamp departure,
+            @RequestParam(value = "arrival") Timestamp arrival,
+            @RequestParam(value = "departure_point") int departure_point,
+            @RequestParam(value = "arrival_point") int arrival_point,
+            @RequestParam(value = "transporting_mean") int transporting_mean,
+            @RequestParam(value = "company") int company,
+            @RequestParam(value = "price") float price,
+            @RequestParam(value = "place_count") int place_count) {
 
-        // transportService.createItem(new Transporting(0, "", new Timestamp(123123123),
-        // new Timestamp(1233231223123123L), "", "", 1, 2, 2, "", ""));
+        transportService.createItem(new Transporting(0, name, departure,
+                arrival, departure_point, arrival_point, transporting_mean, company, price, place_count, place_count));
         return "";
     }
 }

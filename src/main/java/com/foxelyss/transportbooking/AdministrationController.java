@@ -1,9 +1,11 @@
 package com.foxelyss.transportbooking;
 
 import com.foxelyss.transportbooking.model.Book;
+import com.foxelyss.transportbooking.model.Company;
 import com.foxelyss.transportbooking.model.Point;
-import com.foxelyss.transportbooking.model.Transporting;
+import com.foxelyss.transportbooking.model.TransportingResult;
 import com.foxelyss.transportbooking.service.BookService;
+import com.foxelyss.transportbooking.service.CompanyService;
 import com.foxelyss.transportbooking.service.PointService;
 import com.foxelyss.transportbooking.service.TransportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,22 +25,20 @@ public class AdministrationController {
     @Autowired
     PointService pointService;
     @Autowired
-    BookService traasdnsportService;
+    CompanyService traasdnsportService;
 
     @GetMapping("/add_point")
-    public String AddPoint(@RequestParam(value = "name", defaultValue = "World") String name) {
+    public String AddPoint(@RequestParam(value = "name") String name,
+            @RequestParam(value = "region") String region,
+            @RequestParam(value = "city") String town) {
 
         pointService.createItem(new Point(0, null, "Омская область", "фывф"));
         return "";
     }
 
     @GetMapping("/create_company")
-    public String CreateCompany(@RequestParam(value = "name", defaultValue = "World") String name) {
-        return "";
-    }
-
-    @GetMapping("/delete_company")
-    public String DeleteCompany(@RequestParam(value = "name", defaultValue = "World") String name) {
+    public String CreateCompany(@RequestParam(value = "name") int id, String name, String address, String INN) {
+        traasdnsportService.createItem(new Company(id, name, address, INN));
         return "";
     }
 }

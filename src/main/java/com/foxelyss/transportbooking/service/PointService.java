@@ -1,7 +1,7 @@
 package com.foxelyss.transportbooking.service;
 
 import com.foxelyss.transportbooking.model.Point;
-import com.foxelyss.transportbooking.model.Transporting;
+import com.foxelyss.transportbooking.model.TransportingResult;
 import com.foxelyss.transportbooking.repos.PointsRepo;
 import com.foxelyss.transportbooking.repos.TransportRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +24,14 @@ public class PointService {
 
     public Point createItem(Point item) {
         itemRepository.save(item);
-        return item; // Возвращаем созданный объект
+        return item;
     }
 
     public void deleteItem(Long id) {
         itemRepository.deleteById(id);
     }
+
     public Point findByName(String name) {
-        return  itemRepository.findByName(name);
+        return itemRepository.findByName(name);
     }
 }

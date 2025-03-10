@@ -1,7 +1,10 @@
 package com.foxelyss.transportbooking.service;
 
-import com.foxelyss.transportbooking.model.Transporting;
+import com.foxelyss.transportbooking.model.Company;
+import com.foxelyss.transportbooking.model.Point;
 import com.foxelyss.transportbooking.model.TransportingResult;
+import com.foxelyss.transportbooking.repos.CompanyRepo;
+import com.foxelyss.transportbooking.repos.PointsRepo;
 import com.foxelyss.transportbooking.repos.TransportRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,28 +12,25 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class TransportService {
+public class CompanyService {
     @Autowired
-    private TransportRepo itemRepository;
+    private CompanyRepo itemRepository;
 
-    public List<TransportingResult> getAllItems() {
+    public List<Company> getAllItems() {
         return itemRepository.findAll();
     }
 
-    public TransportingResult getItemById(Long id) {
+    public Company getItemById(Long id) {
         return itemRepository.findById(id);
     }
 
-    public Transporting createItem(Transporting item) {
+    public Company createItem(Company item) {
         itemRepository.save(item);
-        return item;
+        return item; // Возвращаем созданный объект
     }
 
     public void deleteItem(Long id) {
         itemRepository.deleteById(id);
     }
 
-    public List<TransportingResult> findByDest(int dep_point, int arr_point) {
-        return itemRepository.findByDest(dep_point, arr_point);
-    }
 }
