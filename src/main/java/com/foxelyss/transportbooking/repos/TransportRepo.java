@@ -62,14 +62,15 @@ public class TransportRepo {
                 inner join point as a2 on transportation.arrival_point  = a2.id
                 inner join transportingmeans on transportation.transporting_mean = transportingmeans.id
                 where a1.id = ? and a2.id = ? and departure > unixepoch()
-                ORDER BY ABS(arrival - ?)
+                ORDER BY ABS(departure - ?)
                 limit ?
                 """;
         if (1 < quantity || quantity > 15) {
             quantity = 15;
         }
+        System.out.println(wanted_time);
 
-        return jdbcTemplate.query(sequel, new Object[] { dep_point, arr_point, quantity, wanted_time },
+        return jdbcTemplate.query(sequel, new Object[] { dep_point, arr_point, wanted_time, quantity },
                 (rs, rowNum) -> {
                     int id;
                     String name;
@@ -89,24 +90,4 @@ public class TransportRepo {
                             rs.getString("company_name"), rs.getInt("place_count"), rs.getInt("free_place_count"));
                 });
     }
-
-    String sql = """
-            select transportation.id,
-            transportation.name,
-            datetime(transportation.arrival,  'auto') ,
-            transportation.place_count,
-            transportation.free_place_count,
-            a1.region||' '|| a1.city AS start_point,
-            transportation.departure ,
-            a2.region||' '|| a2.city AS end_point,
-            company.name as company_name,
-            transportingmeans.name as mean
-            from transportation
-            inner join company on transportation.company =company.id
-            inner join point as a1 on transportation.departure_point  =a1.id
-            inner join point as a2 on transportation.arrival_point  =a2.id
-            inner join transportingmeans on transportation.transporting_mean=transportingmeans.id
-            where a1.id = 2 and a2.id = 1 and  departure>unixepoch()
-            ORDER BY ABS( arrival - 1745375150)
-            """;
 }

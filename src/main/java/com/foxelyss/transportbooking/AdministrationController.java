@@ -28,17 +28,21 @@ public class AdministrationController {
     CompanyService traasdnsportService;
 
     @GetMapping("/add_point")
-    public String AddPoint(@RequestParam(value = "name") String name,
+    public String AddPoint(
+            @RequestParam(value = "name") String name,
             @RequestParam(value = "region") String region,
             @RequestParam(value = "city") String town) {
 
-        pointService.createItem(new Point(0, null, "Омская область", "фывф"));
+        pointService.createItem(new Point(-1, name, "Омская область", "фывф"));
         return "";
     }
 
     @GetMapping("/create_company")
-    public String CreateCompany(@RequestParam(value = "name") int id, String name, String address, String INN) {
-        traasdnsportService.createItem(new Company(id, name, address, INN));
+    public String CreateCompany(
+            @RequestParam(value = "name") String name,
+            @RequestParam(value = "address") String address,
+            @RequestParam(value = "inn") String INN) {
+        traasdnsportService.createItem(new Company(-1, name, address, INN));
         return "";
     }
 }
