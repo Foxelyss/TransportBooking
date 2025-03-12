@@ -26,7 +26,7 @@ public class CompanyService {
 
     public Company createItem(Company item) {
         itemRepository.save(item);
-        return item; // Возвращаем созданный объект
+        return item;
     }
 
     public void deleteItem(Long id) {

@@ -10,13 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/search")
 public class SearchController {
     @Autowired
-    private TransportService itemService;
+    private TransportService transportService;
     @Autowired
     private PointService pointService;
 
@@ -30,12 +31,18 @@ public class SearchController {
         return pointService.getAllItems();
     }
 
+    @GetMapping("/means")
+    public List<HashMap<String, Object>> searchForMeans() {
+        return transportService.getAllTransportingMeans();
+    }
+
     @GetMapping("/search")
     public List<TransportingResult> searchForTransport(@RequestParam(value = "point_a") int point_a,
-            @RequestParam(value = "point_b") int point_b,
-            @RequestParam(value = "quantity", defaultValue = "15") int quantity,
-            @RequestParam(value = "wanted_time", defaultValue = "0") long wanted_time) {
-        return itemService.findByDest(point_a, point_b, quantity, wanted_time);
+                                                       @RequestParam(value = "point_b") int point_b,
+                                                       @RequestParam(value = "quantity", defaultValue = "15") int quantity,
+                                                       @RequestParam(value = "wanted_time", defaultValue = "0") long wanted_time,
+                                                       @RequestParam(value = "mean", defaultValue = "-1") int mean) {
+        return transportService.findByDest(point_a, point_b, quantity, wanted_time, mean);
     }
 }
 

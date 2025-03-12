@@ -21,10 +21,6 @@ import java.util.ArrayList;
 public class BusinessController {
     @Autowired
     TransportService transportService;
-    @Autowired
-    PointService pointService;
-    @Autowired
-    BookService bookService;
 
     @GetMapping("/add_transport")
     public String AddTransporting(

@@ -3,9 +3,7 @@ create table Company (
     name CHAR(128) not null,
     inn CHAR(128) not null,
     registration_address CHAR(128) not null,
-    phone CHAR(128) not null,
-    token_date date,
-    token char(255)
+    phone CHAR(128) not null
 );
 create table TransportingMeans (
     id INTEGER primary key,
@@ -28,15 +26,19 @@ create table Transportation (
     company INTEGER references company (id),
     price UNSIGNED not null,
     place_count UNSIGNED not null,
-    free_place_count UNSIGNED not null
+    free_place_count UNSIGNED not null check(
+        free_place_count between 0 and place_count
+    )
 );
 create table Passenger (
-    passport BIGINT primary key,
+    id INTEGER primary key,
+    passport BIGINT not null,
     phone bigint not null,
     email CHAR(128) not null,
-    firstname CHAR(32) not null,
-    surname CHAR(32) not null,
-    lastname CHAR(32)
+    firstname CHAR(32) not null CHECK(firstname != ''),
+    surname CHAR(32) not null CHECK(surname != ''),
+    lastname CHAR(32),
+    check(firstname != surname)
 );
 create table book (
     id INTEGER primary key,

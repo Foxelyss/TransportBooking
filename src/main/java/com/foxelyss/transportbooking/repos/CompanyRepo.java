@@ -1,13 +1,10 @@
 package com.foxelyss.transportbooking.repos;
 
 import com.foxelyss.transportbooking.model.Company;
-import com.foxelyss.transportbooking.model.TransportingResult;
-import com.foxelyss.transportbooking.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +29,7 @@ public class CompanyRepo {
 
     public Company findById(Long id) {
         String sql = "SELECT * FROM items WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[] { id }, (rs, rowNum) -> {
+        return jdbcTemplate.queryForObject(sql, new Object[]{id}, (rs, rowNum) -> {
             // Transporting item = new Transporting();
             // item.setId(rs.getLong("id"));
             // item.setName(rs.getString("name"));

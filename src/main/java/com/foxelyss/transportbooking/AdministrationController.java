@@ -33,7 +33,7 @@ public class AdministrationController {
             @RequestParam(value = "region") String region,
             @RequestParam(value = "city") String town) {
 
-        pointService.createItem(new Point(-1, name, "Омская область", "фывф"));
+        pointService.createItem(new Point(-1, name, region, town));
         return "";
     }
 

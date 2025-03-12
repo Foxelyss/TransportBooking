@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.List;
 
 @Repository
@@ -14,19 +15,19 @@ public class TransportRepo {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public List<TransportingResult> findAll() {
-        String sql = "SELECT * FROM items";
+    public List<HashMap<String, Object>> findAllTransportingMeans() {
+        String sql = "SELECT * FROM transportingmeans";
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
-            // Item item = new Item();
-            // item.setId(rs.getLong("id"));
-            // item.setName(rs.getString("name"));
-            return null;
+            HashMap<String, Object> a = new HashMap<>();
+            a.put("id", rs.getInt("id"));
+            a.put("name", rs.getString("name"));
+            return a;
         });
     }
 
     public TransportingResult findById(Long id) {
         String sql = "SELECT * FROM items WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[] { id }, (rs, rowNum) -> {
+        return jdbcTemplate.queryForObject(sql, new Object[]{id}, (rs, rowNum) -> {
             // Transporting item = new Transporting();
             // item.setId(rs.getLong("id"));
             // item.setName(rs.getString("name"));
@@ -44,7 +45,7 @@ public class TransportRepo {
         return jdbcTemplate.update(sql, id);
     }
 
-    public List<TransportingResult> findByDest(int dep_point, int arr_point, int quantity, long wanted_time) {
+    public List<TransportingResult> findByDest(int dep_point, int arr_point, int quantity, long wanted_time, int mean) {
         String sequel = """
                 select transportation.id,
                 transportation.name,
@@ -52,9 +53,9 @@ public class TransportRepo {
                 transportation.price,
                 transportation.place_count,
                 transportation.free_place_count,
-                a1.region||' '|| a1.city AS start_point,
+                a1.region||'|'|| a1.city AS start_point,
                 transportation.departure ,
-                a2.region||' '|| a2.city AS end_point,
+                a2.region||'|'|| a2.city AS end_point,
                 company.name as company_name,
                 transportingmeans.name as mean
                 from transportation
