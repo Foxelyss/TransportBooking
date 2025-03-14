@@ -25,7 +25,7 @@ public class BookRepo {
 
     public Book findById(Long id) {
         String sql = "SELECT * FROM point WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[]{id}, (rs, rowNum) -> {
+        return jdbcTemplate.queryForObject(sql, new Object[] { id }, (rs, rowNum) -> {
             return new Book(rs.getInt("id"), rs.getInt("passenger"), rs.getInt("place"), rs.getString("payment"),
                     rs.getInt("price"), rs.getInt("transporting"));
         });
@@ -80,7 +80,7 @@ public class BookRepo {
                 select Passenger.id from book
                 inner join passenger on book.passenger = Passenger.id
                 inner join transportation on Transportation.id = book.transportation
-                where passport = ? and email = ? and departure > unixepoch() and book.id = 1
+                where passport = ? and email = ? and departure > unixepoch() and book.id = ?
                 """;
 
         return jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
@@ -110,7 +110,7 @@ public class BookRepo {
                 inner join point as a2 on transportation.arrival_point  = a2.id
                 inner join transportingmeans on transportation.transporting_mean = transportingmeans.id
                 inner join book on book.transportation =Transportation.id
-                inner join passenger on book.passenger = Passenger.passport
+                inner join passenger on book.passenger = Passenger.id
                 where passport = ? and email = ?
                 """;
 
