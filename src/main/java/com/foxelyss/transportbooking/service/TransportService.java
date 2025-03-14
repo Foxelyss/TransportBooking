@@ -32,6 +32,11 @@ public class TransportService {
     }
 
     public List<TransportingResult> findByDest(int dep_point, int arr_point, int quantity, long wanted_time, int mean) {
-        return transportRepo.findByDest(dep_point, arr_point, quantity, wanted_time, mean);
+        if (mean == -1) {
+            return transportRepo.findByDest(dep_point, arr_point, quantity, wanted_time);
+        } else {
+            return transportRepo.findByDest(dep_point, arr_point, quantity, wanted_time, mean);
+        }
+
     }
 }
