@@ -37,8 +37,7 @@ create table Passenger (
     email CHAR(128) not null,
     firstname CHAR(32) not null CHECK(firstname != ''),
     surname CHAR(32) not null CHECK(surname != ''),
-    lastname CHAR(32),
-    check(firstname != surname)
+    lastname CHAR(32)
 );
 create table book (
     id INTEGER primary key,
