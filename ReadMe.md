@@ -23,7 +23,7 @@ gradle, sqlite3
 dart, flutter
 
 Для старта запустить в папке: `flutter run`
-Для компиляции: `flutter build apk`
+Для компиляции для android: `flutter build apk`
 
 Если у вас не показываются запросы, смените адрес сервера в файле `Config.dart`
 ``dart
