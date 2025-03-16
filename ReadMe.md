@@ -6,7 +6,7 @@
 gradle, sqlite3
 
 Для начала работы надо инициировать базу данных, для этого:
-`sqlite3 mydatabase.db ".read create.sql" ".read data.sql"`
+`sqlite3 database.db ".read create.sql" ".read data.sql"`
 
 Затем запустить сервер
 
