@@ -8,7 +8,6 @@ import com.foxelyss.transportbooking.repos.PassengerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -27,13 +26,13 @@ public class BookService {
         return bookRepo.findById(id);
     }
 
-    public Book createItem(Passenger passenger, Book book) {
-        bookRepo.allocatePlace(book.transporting());
+    public int createItem(Passenger passenger, int transporting) {
+        bookRepo.allocatePlace(transporting);
 
         Number a = passengerRepo.save(passenger);
 
-        bookRepo.save((Integer) a, book);
-        return book;
+        bookRepo.save((Integer) a, transporting);
+        return 200;
     }
 
     public void deleteItem(String email, long passport, long id) {
@@ -42,7 +41,7 @@ public class BookService {
         passengerRepo.deleteById((Integer) a);
     }
 
-    public List<HashMap<String, String>> findAllByDetails(String email, long passport) {
+    public List<BookRepo.Ticket> findAllByDetails(String email, long passport) {
         return bookRepo.findAllByDetails(email, passport);
     }
 }

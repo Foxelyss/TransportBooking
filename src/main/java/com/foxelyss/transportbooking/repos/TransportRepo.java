@@ -1,13 +1,12 @@
 package com.foxelyss.transportbooking.repos;
 
+import com.foxelyss.transportbooking.model.Mean;
 import com.foxelyss.transportbooking.model.Transporting;
-import com.foxelyss.transportbooking.model.TransportingResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
-import java.util.HashMap;
 import java.util.List;
 
 @Repository
@@ -15,19 +14,17 @@ public class TransportRepo {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public List<HashMap<String, Object>> findAllTransportingMeans() {
+    public List<Mean> findAllTransportingMeans() {
         String sql = "SELECT * FROM transportingmeans";
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
-            HashMap<String, Object> a = new HashMap<>();
-            a.put("id", rs.getInt("id"));
-            a.put("name", rs.getString("name"));
+            Mean a = new Mean(rs.getInt("id"), rs.getString("name"));
             return a;
         });
     }
 
     public TransportingResult findById(Long id) {
         String sql = "SELECT * FROM items WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[] { id }, (rs, rowNum) -> {
+        return jdbcTemplate.queryForObject(sql, new Object[]{id}, (rs, rowNum) -> {
             // Transporting item = new Transporting();
             // item.setId(rs.getLong("id"));
             // item.setName(rs.getString("name"));

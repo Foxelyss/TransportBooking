@@ -1,7 +1,8 @@
 package com.foxelyss.transportbooking;
 
+import com.foxelyss.transportbooking.model.Mean;
 import com.foxelyss.transportbooking.model.Point;
-import com.foxelyss.transportbooking.model.TransportingResult;
+import com.foxelyss.transportbooking.repos.TransportingResult;
 import com.foxelyss.transportbooking.service.PointService;
 import com.foxelyss.transportbooking.service.TransportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -32,7 +32,7 @@ public class SearchController {
     }
 
     @GetMapping("/means")
-    public List<HashMap<String, Object>> searchForMeans() {
+    public List<Mean> searchForMeans() {
         return transportService.getAllTransportingMeans();
     }
 

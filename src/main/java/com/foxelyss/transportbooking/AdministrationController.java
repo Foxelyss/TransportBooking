@@ -1,10 +1,7 @@
 package com.foxelyss.transportbooking;
 
-import com.foxelyss.transportbooking.model.Book;
 import com.foxelyss.transportbooking.model.Company;
 import com.foxelyss.transportbooking.model.Point;
-import com.foxelyss.transportbooking.model.TransportingResult;
-import com.foxelyss.transportbooking.service.BookService;
 import com.foxelyss.transportbooking.service.CompanyService;
 import com.foxelyss.transportbooking.service.PointService;
 import com.foxelyss.transportbooking.service.TransportService;
@@ -13,9 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.sql.Timestamp;
-import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/api/admin")

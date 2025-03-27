@@ -1,8 +1,7 @@
 package com.foxelyss.transportbooking;
 
 import com.foxelyss.transportbooking.model.Company;
-import com.foxelyss.transportbooking.model.Transporting;
-import com.foxelyss.transportbooking.model.TransportingResult;
+import com.foxelyss.transportbooking.repos.TransportingResult;
 import com.foxelyss.transportbooking.repos.CompanyRepo;
 import com.foxelyss.transportbooking.service.TransportService;
 

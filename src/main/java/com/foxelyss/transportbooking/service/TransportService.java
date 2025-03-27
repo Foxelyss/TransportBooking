@@ -1,12 +1,12 @@
 package com.foxelyss.transportbooking.service;
 
+import com.foxelyss.transportbooking.model.Mean;
 import com.foxelyss.transportbooking.model.Transporting;
-import com.foxelyss.transportbooking.model.TransportingResult;
+import com.foxelyss.transportbooking.repos.TransportingResult;
 import com.foxelyss.transportbooking.repos.TransportRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -14,7 +14,7 @@ public class TransportService {
     @Autowired
     private TransportRepo transportRepo;
 
-    public List<HashMap<String, Object>> getAllTransportingMeans() {
+    public List<Mean> getAllTransportingMeans() {
         return transportRepo.findAllTransportingMeans();
     }
 

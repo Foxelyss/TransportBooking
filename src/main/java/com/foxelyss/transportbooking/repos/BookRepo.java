@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +26,7 @@ public class BookRepo {
 
     public Book findById(Long id) {
         String sql = "SELECT * FROM point WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[] { id }, (rs, rowNum) -> {
+        return jdbcTemplate.queryForObject(sql, new Object[]{id}, (rs, rowNum) -> {
             return new Book(rs.getInt("id"), rs.getInt("passenger"), rs.getInt("place"), rs.getString("payment"),
                     rs.getInt("price"), rs.getInt("transporting"));
         });
@@ -40,7 +41,7 @@ public class BookRepo {
         return jdbcTemplate.update(sql_4, transporting);
     }
 
-    public int save(int passengerId, Book item) {
+    public int save(int passengerId, int transporting) {
         String sql_1 = """
                 insert into Book values (null,?,?,?,?)
                 """;
@@ -52,13 +53,13 @@ public class BookRepo {
 
         Float price = jdbcTemplate.queryForObject(sql_2, (rs, rowNum) -> {
             return rs.getFloat("price");
-        }, item.transporting());
+        }, transporting);
 
         if (price == null) {
             return -1;
         }
 
-        return jdbcTemplate.update(sql_1, passengerId, "Картой", price, item.transporting());
+        return jdbcTemplate.update(sql_1, passengerId, "Картой", price, transporting);
     }
 
     public int deleteById(String email, long passport, long id) {
@@ -88,7 +89,15 @@ public class BookRepo {
         }, passport, email, id);
     }
 
-    public List<HashMap<String, String>> findAllByDetails(String email, long passport) {
+    public record Ticket(int id, String name, int transporting,
+                         Timestamp arrival, String startPoint,
+                         String endPoint, float price,
+                         String mean, String companyName,
+                         String payment
+    ) {
+    }
+
+    public List<Ticket> findAllByDetails(String email, long passport) {
         String sql = """
                 select book.id,
                 transportation.id as transporting,
@@ -115,17 +124,17 @@ public class BookRepo {
                 """;
 
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
-            HashMap<String, String> a = new HashMap<String, String>();
-            a.put("id", "" + rs.getInt("id"));
-            a.put("name", rs.getString("name"));
-            a.put("transporting", "" + rs.getInt("transporting"));
-            a.put("arrival", "" + new Timestamp(rs.getLong("arrival") * 1000));
-            a.put("start_point", rs.getString("start_point"));
-            a.put("end_point", rs.getString("end_point"));
-            a.put("price", "" + rs.getFloat("price"));
-            a.put("mean", rs.getString("mean"));
-            a.put("company_name", rs.getString("company_name"));
-            a.put("payment", rs.getString("payment"));
+            Ticket a = new Ticket(
+                    rs.getInt("id")
+                    , rs.getString("name")
+                    , rs.getInt("transporting")
+                    , new Timestamp(rs.getLong("arrival") * 1000)
+                    , rs.getString("start_point")
+                    , rs.getString("end_point")
+                    , rs.getFloat("price")
+                    , rs.getString("mean")
+                    , rs.getString("company_name")
+                    , rs.getString("payment"));
             return a;
         }, passport, email);
     }

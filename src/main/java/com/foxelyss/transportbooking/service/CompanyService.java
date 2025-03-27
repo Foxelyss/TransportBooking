@@ -1,11 +1,7 @@
 package com.foxelyss.transportbooking.service;
 
 import com.foxelyss.transportbooking.model.Company;
-import com.foxelyss.transportbooking.model.Point;
-import com.foxelyss.transportbooking.model.TransportingResult;
 import com.foxelyss.transportbooking.repos.CompanyRepo;
-import com.foxelyss.transportbooking.repos.PointsRepo;
-import com.foxelyss.transportbooking.repos.TransportRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

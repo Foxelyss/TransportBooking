@@ -1,14 +1,6 @@
 package com.foxelyss.transportbooking.repos;
 
 import com.foxelyss.transportbooking.model.Point;
-import com.foxelyss.transportbooking.model.TransportingResult;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
-
-import com.foxelyss.transportbooking.model.TransportingResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -29,7 +21,7 @@ public class PointsRepo {
 
     public Point findById(Long id) {
         String sql = "SELECT * FROM point WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[] { id }, (rs, rowNum) -> {
+        return jdbcTemplate.queryForObject(sql, new Object[]{id}, (rs, rowNum) -> {
             return new Point(rs.getInt("id"), rs.getString("name"), rs.getString("region"), rs.getString("city"));
         });
     }
@@ -47,14 +39,14 @@ public class PointsRepo {
 
     public Point findByName(String name) {
         String sql = "select * from point where point.city like ?";
-        return jdbcTemplate.queryForObject(sql, new Object[] { name }, (rs, rowNum) -> {
+        return jdbcTemplate.queryForObject(sql, new Object[]{name}, (rs, rowNum) -> {
             return new Point(rs.getInt("id"), rs.getString("name"), rs.getString("region"), rs.getString("city"));
         });
     }
 
     public List<Point> findManyByName(String name) {
         String sql = "select * from point where point.city like ?";
-        return jdbcTemplate.query(sql, new Object[] { "%" + name + "%" }, (rs, rowNum) -> {
+        return jdbcTemplate.query(sql, new Object[]{"%" + name + "%"}, (rs, rowNum) -> {
             return new Point(rs.getInt("id"), rs.getString("name"), rs.getString("region"), rs.getString("city"));
         });
     }
