@@ -1,6 +1,15 @@
-FROM openjdk:21-jdk-alpine
-RUN addgroup -S spring && adduser -S spring -G spring
+FROM openjdk:21-jdk
+EXPOSE 8080
+
+RUN groupadd spring && adduser spring -g spring
+RUN mkdir /app
+
+WORKDIR /app
+RUN mkdir -p /app/databases && chown -R spring:spring /app/databases
+
 USER spring:spring
-ARG JAR_FILE=target/*.jar
+
+RUN chmod +rw -R /app/databases
+ARG JAR_FILE=build/libs/transportbooking-0.0.1-SNAPSHOT.jar
 COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+ENTRYPOINT ["java","-jar","/app/app.jar"]
