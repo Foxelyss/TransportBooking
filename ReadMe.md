@@ -6,13 +6,21 @@
 gradle, sqlite3
 
 Для начала работы надо инициировать базу данных, для этого:
-`sqlite3 database.db ".read create.sql" ".read data.sql"`
+`sqlite3 database.db ".read src/main/resources/schema.sql" ".read data.sql"`
+(Можно пропустить этот шаг, но тогда тестовых данных **не будет**)
 
 Затем запустить сервер
 
 Команда старта сервера: `./gradlew :bootRun`
 
 Код сервера находится здесь, в текущей папке.
+
+Команда для теста:
+`test.sh`
+
+Для использования docker контейнера:
+`build-docker.sh` - Для сборки
+`start-docker.sh` - Старта
 
 ## Фронтенд
 
