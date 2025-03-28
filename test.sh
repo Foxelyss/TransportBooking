@@ -1,2 +1,3 @@
-rm test-database.db;
-./gradlew :test
+#!/usr/bin/env bash
+
+./gradlew test
