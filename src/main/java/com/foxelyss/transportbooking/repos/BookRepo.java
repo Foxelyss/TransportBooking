@@ -36,7 +36,7 @@ public class BookRepo {
         String sql_4 = """
                 update Transportation
                 set free_place_count = free_place_count-1
-                where id = ?
+                where id = ? and departure > unixepoch()
                 """;
         return jdbcTemplate.update(sql_4, transporting);
     }

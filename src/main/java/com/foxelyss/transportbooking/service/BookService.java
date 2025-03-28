@@ -27,7 +27,11 @@ public class BookService {
     }
 
     public int createItem(Passenger passenger, int transporting) {
-        bookRepo.allocatePlace(transporting);
+        int rows = bookRepo.allocatePlace(transporting);
+
+        if (rows == 0) {
+            throw new RuntimeException(new Exception("Рейс в прошлом!"));
+        }
 
         Number a = passengerRepo.save(passenger);
 

@@ -41,7 +41,7 @@ create table Passenger (
 );
 create table book (
     id INTEGER primary key,
-    passenger bigint references passenger (passport),
+    passenger bigint references passenger (id),
     payment CHAR(128) not null,
     price FLOAT(2) not null,
     transportation INTEGER references transportation (id)
