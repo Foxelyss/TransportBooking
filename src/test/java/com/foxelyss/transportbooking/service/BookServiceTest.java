@@ -14,8 +14,7 @@ import org.springframework.test.jdbc.JdbcTestUtils;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ComponentScan({"com.foxelyss.transportbooking.model"})
@@ -70,6 +69,23 @@ class BookServiceTest {
         });
     }
 
+    @Test
+    void shouldBookMultiple() {
+        bookService.createItem(testificate, 1);
+        bookService.createItem(testificate, 1);
+
+        List<BookRepo.Ticket> tickets = bookService.findAllByDetails(testificate.Email(), testificate.passport());
+
+        assertEquals(2, tickets.size());
+        assertEquals(1, tickets.getFirst().transporting());
+
+        bookService.deleteItem(testificate.Email(), testificate.passport(), tickets.getFirst().id());
+        bookService.deleteItem(testificate.Email(), testificate.passport(), tickets.getLast().id());
+
+        tickets = bookService.findAllByDetails(testificate.Email(), testificate.passport());
+
+        assertEquals(0, tickets.size());
+    }
 
     @AfterEach
     void tearDown() {
