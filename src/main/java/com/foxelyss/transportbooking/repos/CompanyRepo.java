@@ -14,26 +14,26 @@ public class CompanyRepo {
     private JdbcTemplate jdbcTemplate;
 
     public List<Company> findAll() {
-        String sql = "SELECT * FROM items";
+        String sql = "SELECT * FROM company";
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
-            return new Company(rs.getInt("id"), rs.getString("name"), rs.getString("registration_address"), rs.getString("inn"));
+            return new Company(rs.getInt("id"), rs.getString("name"), rs.getString("registration_address"), rs.getString("inn"), rs.getString("phone"));
         });
     }
 
     public Company findById(Long id) {
-        String sql = "SELECT * FROM items WHERE id = ?";
+        String sql = "SELECT * FROM company WHERE id = ?";
         return jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
-            return new Company(rs.getInt("id"), rs.getString("name"), rs.getString("registration_address"), rs.getString("inn"));
+            return new Company(rs.getInt("id"), rs.getString("name"), rs.getString("registration_address"), rs.getString("inn"), rs.getString("phone"));
         }, id);
     }
 
     public int save(Company item) {
-        String sql = "INSERT INTO items (name) VALUES (?)";
-        return jdbcTemplate.update(sql, item.name());
+        String sql = "INSERT INTO company VALUES (null, ?, ?, ?, ?)";
+        return jdbcTemplate.update(sql, item.name(), item.INN(), item.address(), item.phone());
     }
 
     public int deleteById(Long id) {
-        String sql = "DELETE FROM items WHERE id = ?";
+        String sql = "DELETE FROM company WHERE id = ?";
         return jdbcTemplate.update(sql, id);
     }
 

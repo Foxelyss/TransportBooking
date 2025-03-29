@@ -34,7 +34,9 @@ public class AdministrationController {
     public void CreateCompany(
             @RequestParam(value = "name") String name,
             @RequestParam(value = "address") String address,
-            @RequestParam(value = "inn") String INN) {
-        companyService.createItem(new Company(-1, name, address, INN));
+            @RequestParam(value = "inn") String INN,
+            @RequestParam(value = "phone") String phone
+    ) {
+        companyService.createItem(new Company(-1, name, address, INN, phone));
     }
 }
