@@ -17,7 +17,7 @@ public class BusinessController {
     TransportService transportService;
 
     @GetMapping("/add_transport")
-    public String AddTransporting(
+    public void AddTransporting(
             @RequestParam(value = "name") String name,
             @RequestParam(value = "departure") Timestamp departure,
             @RequestParam(value = "arrival") Timestamp arrival,
@@ -30,6 +30,5 @@ public class BusinessController {
 
         transportService.createItem(new Transporting(0, name, departure,
                 arrival, departure_point, arrival_point, transporting_mean, company, price, place_count, place_count));
-        return "";
     }
 }

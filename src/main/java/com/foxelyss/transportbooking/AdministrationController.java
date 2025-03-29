@@ -22,21 +22,19 @@ public class AdministrationController {
     CompanyService companyService;
 
     @GetMapping("/add_point")
-    public String AddPoint(
+    public void AddPoint(
             @RequestParam(value = "name") String name,
             @RequestParam(value = "region") String region,
             @RequestParam(value = "city") String town) {
 
         pointService.createItem(new Point(-1, name, region, town));
-        return "";
     }
 
     @GetMapping("/create_company")
-    public String CreateCompany(
+    public void CreateCompany(
             @RequestParam(value = "name") String name,
             @RequestParam(value = "address") String address,
             @RequestParam(value = "inn") String INN) {
         companyService.createItem(new Company(-1, name, address, INN));
-        return "";
     }
 }
