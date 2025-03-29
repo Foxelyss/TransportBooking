@@ -18,15 +18,6 @@ public class BookService {
     @Autowired
     private PassengerRepo passengerRepo;
 
-
-    public List<Book> getAllItems() {
-        return bookRepo.findAll();
-    }
-
-    public Book getItemById(Long id) {
-        return bookRepo.findById(id);
-    }
-
     public void createItem(Passenger passenger, int transporting) {
         int rows = bookRepo.allocatePlace(transporting);
 

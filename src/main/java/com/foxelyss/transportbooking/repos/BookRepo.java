@@ -14,22 +14,6 @@ public class BookRepo {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    public List<Book> findAll() {
-        String sql = "SELECT * FROM point";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> {
-            return new Book(rs.getInt("id"), rs.getInt("passenger"), rs.getInt("place"), rs.getString("payment"),
-                    rs.getInt("price"), rs.getInt("transporting"));
-        });
-    }
-
-    public Book findById(Long id) {
-        String sql = "SELECT * FROM point WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
-            return new Book(rs.getInt("id"), rs.getInt("passenger"), rs.getInt("place"), rs.getString("payment"),
-                    rs.getInt("price"), rs.getInt("transporting"));
-        }, id);
-    }
-
     public int allocatePlace(int transporting) {
         String sql_4 = """
                 update Transportation
