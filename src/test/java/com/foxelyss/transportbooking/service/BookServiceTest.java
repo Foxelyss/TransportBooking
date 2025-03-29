@@ -44,9 +44,7 @@ class BookServiceTest {
 
     @Test
     void shouldNotBook() {
-        assertThrows(Exception.class, () -> {
-            bookService.createItem(testificate, 2);
-        });
+        assertThrows(Exception.class, () -> bookService.createItem(testificate, 2));
     }
 
     @Test
@@ -64,9 +62,7 @@ class BookServiceTest {
     void shouldNotReturnBook() {
         List<BookRepo.Ticket> tickets = bookService.findAllByDetails("unknown@example.com", 123);
 
-        assertThrows(Exception.class, () -> {
-            bookService.deleteItem(testificate.Email(), testificate.passport(), tickets.getFirst().id());
-        });
+        assertThrows(Exception.class, () -> bookService.deleteItem(testificate.Email(), testificate.passport(), tickets.getFirst().id()));
     }
 
     @Test

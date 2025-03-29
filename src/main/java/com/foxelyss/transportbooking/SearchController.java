@@ -45,5 +45,3 @@ public class SearchController {
         return transportService.findByDest(point_a, point_b, quantity, wanted_time, mean);
     }
 }
-
-;

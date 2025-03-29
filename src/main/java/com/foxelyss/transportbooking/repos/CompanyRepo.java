@@ -16,25 +16,15 @@ public class CompanyRepo {
     public List<Company> findAll() {
         String sql = "SELECT * FROM items";
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
-            // Item item = new Item();
-            // item.setId(rs.getLong("id"));
-            // item.setName(rs.getString("name"));
-            return null;
+            return new Company(rs.getInt("id"), rs.getString("name"), rs.getString("registration_address"), rs.getString("inn"));
         });
-    }
-
-    public Optional<Company> findByUsername(String username) {
-        return null;
     }
 
     public Company findById(Long id) {
         String sql = "SELECT * FROM items WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[]{id}, (rs, rowNum) -> {
-            // Transporting item = new Transporting();
-            // item.setId(rs.getLong("id"));
-            // item.setName(rs.getString("name"));
-            return null;
-        });
+        return jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
+            return new Company(rs.getInt("id"), rs.getString("name"), rs.getString("registration_address"), rs.getString("inn"));
+        }, id);
     }
 
     public int save(Company item) {
@@ -45,7 +35,6 @@ public class CompanyRepo {
     public int deleteById(Long id) {
         String sql = "DELETE FROM items WHERE id = ?";
         return jdbcTemplate.update(sql, id);
-
     }
 
 }

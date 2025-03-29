@@ -22,9 +22,8 @@ public class TransportService {
         return transportRepo.findById(id);
     }
 
-    public Transporting createItem(Transporting item) {
+    public void createItem(Transporting item) {
         transportRepo.save(item);
-        return item;
     }
 
     public void deleteItem(Long id) {

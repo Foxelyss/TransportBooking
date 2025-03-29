@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Time;
 import java.sql.Timestamp;
-import java.util.HashMap;
 import java.util.List;
 
 @Repository
@@ -26,10 +24,10 @@ public class BookRepo {
 
     public Book findById(Long id) {
         String sql = "SELECT * FROM point WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[]{id}, (rs, rowNum) -> {
+        return jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
             return new Book(rs.getInt("id"), rs.getInt("passenger"), rs.getInt("place"), rs.getString("payment"),
                     rs.getInt("price"), rs.getInt("transporting"));
-        });
+        }, id);
     }
 
     public int allocatePlace(int transporting) {
@@ -124,7 +122,7 @@ public class BookRepo {
                 """;
 
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
-            Ticket a = new Ticket(
+            return new Ticket(
                     rs.getInt("id")
                     , rs.getString("name")
                     , rs.getInt("transporting")
@@ -135,7 +133,6 @@ public class BookRepo {
                     , rs.getString("mean")
                     , rs.getString("company_name")
                     , rs.getString("payment"));
-            return a;
         }, passport, email);
     }
 }

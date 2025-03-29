@@ -17,19 +17,39 @@ public class TransportRepo {
     public List<Mean> findAllTransportingMeans() {
         String sql = "SELECT * FROM transportingmeans";
         return jdbcTemplate.query(sql, (rs, rowNum) -> {
-            Mean a = new Mean(rs.getInt("id"), rs.getString("name"));
-            return a;
+            return new Mean(rs.getInt("id"), rs.getString("name"));
         });
     }
 
     public TransportingResult findById(Long id) {
-        String sql = "SELECT * FROM items WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[]{id}, (rs, rowNum) -> {
-            // Transporting item = new Transporting();
-            // item.setId(rs.getLong("id"));
-            // item.setName(rs.getString("name"));
-            return null;
-        });
+        String sql = """
+                select transportation.id,
+                transportation.name,
+                transportation.arrival,
+                transportation.price,
+                transportation.place_count,
+                transportation.free_place_count,
+                transportation.arrival_point,
+                transportation.departure_point,
+                a1.region||'|'|| a1.city AS start_point,
+                transportation.departure ,
+                a2.region||'|'|| a2.city AS end_point,
+                company.name as company_name,
+                transportingmeans.name as mean
+                from transportation
+                inner join company on transportation.company = company.id
+                inner join point as a1 on transportation.departure_point  = a1.id
+                inner join point as a2 on transportation.arrival_point  = a2.id
+                inner join transportingmeans on transportation.transporting_mean = transportingmeans.id
+                where transportation.id = ?
+                """;
+        return jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
+            return new TransportingResult(rs.getInt("id"), rs.getString("name"),
+                    new Timestamp(rs.getLong("departure") * 1000), new Timestamp(rs.getLong("arrival") * 1000),
+                    rs.getString("start_point"), rs.getString("end_point"), rs.getInt("arrival_point"), rs.getInt("departure_point"),
+                    rs.getFloat("price"), rs.getString("mean"),
+                    rs.getString("company_name"), rs.getInt("place_count"), rs.getInt("free_place_count"));
+        }, id);
     }
 
     public int save(Transporting item) {
@@ -64,7 +84,7 @@ public class TransportRepo {
                 ORDER BY ABS(departure - ?)
                 limit ?
                 """;
-        if (1 < quantity || quantity > 15) {
+        if (quantity < 1 || quantity > 15) {
             quantity = 15;
         }
 
@@ -100,7 +120,7 @@ public class TransportRepo {
                 ORDER BY ABS(departure - ?)
                 limit ?
                 """;
-        if (1 < quantity || quantity > 15) {
+        if (quantity < 1 || quantity > 15) {
             quantity = 15;
         }
 

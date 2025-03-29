@@ -26,7 +26,7 @@ public class BookService {
         return bookRepo.findById(id);
     }
 
-    public int createItem(Passenger passenger, int transporting) {
+    public void createItem(Passenger passenger, int transporting) {
         int rows = bookRepo.allocatePlace(transporting);
 
         if (rows == 0) {
@@ -36,7 +36,6 @@ public class BookService {
         Number a = passengerRepo.save(passenger);
 
         bookRepo.save((Integer) a, transporting);
-        return 200;
     }
 
     public void deleteItem(String email, long passport, long id) {
