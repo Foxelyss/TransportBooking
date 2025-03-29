@@ -40,8 +40,13 @@ public class BookController {
                             @RequestParam(value = "email") String email,
                             @RequestParam(value = "passport") long passport,
                             @RequestParam(value = "phone") long phone) {
-        bookService.createItem(
-                new Passenger(phone, email, surname, name, middle_name, passport), transporting);
+
+        try {
+            bookService.createItem(new Passenger(phone, email, surname, name, middle_name, passport), transporting);
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+
         return "Success";
     }
 
@@ -49,7 +54,11 @@ public class BookController {
     public String ReturnTicket(@RequestParam(value = "email") String email,
                                @RequestParam(value = "passport") long passport,
                                @RequestParam(value = "id") long id) {
-        bookService.deleteItem(email, passport, id);
+        try {
+            bookService.deleteItem(email, passport, id);
+        } catch (Exception e) {
+            return e.getMessage();
+        }
         return "Success";
     }
 }

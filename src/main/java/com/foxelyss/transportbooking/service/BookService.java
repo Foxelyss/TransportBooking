@@ -6,6 +6,7 @@ import com.foxelyss.transportbooking.repos.BookRepo;
 import com.foxelyss.transportbooking.repos.PassengerRepo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,7 +31,7 @@ public class BookService {
         int rows = bookRepo.allocatePlace(transporting);
 
         if (rows == 0) {
-            throw new RuntimeException(new Exception("Рейс в прошлом!"));
+            throw new RuntimeException(new Exception("Рейс в прошлом или не найден!"));
         }
 
         Number a = passengerRepo.save(passenger);
@@ -39,7 +40,14 @@ public class BookService {
     }
 
     public void deleteItem(String email, long passport, long id) {
-        Number a = bookRepo.getRecordForBook(email, passport, id);
+        Number a;
+
+        try {
+            a = bookRepo.getRecordForBook(email, passport, id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new RuntimeException(new Exception("Бронирование пропущено, возврат невозможен!"));
+        }
+        
         bookRepo.deleteById(email, passport, id);
         passengerRepo.deleteById((Integer) a);
     }
