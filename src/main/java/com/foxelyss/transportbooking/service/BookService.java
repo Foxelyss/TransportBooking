@@ -31,7 +31,7 @@ public class BookService {
         int rows = bookRepo.allocatePlace(transporting);
 
         if (rows == 0) {
-            throw new RuntimeException(new Exception("Рейс в прошлом или не найден!"));
+            throw new RuntimeException("Рейс в прошлом или не найден!");
         }
 
         Number a = passengerRepo.save(passenger);
@@ -45,9 +45,9 @@ public class BookService {
         try {
             a = bookRepo.getRecordForBook(email, passport, id);
         } catch (EmptyResultDataAccessException e) {
-            throw new RuntimeException(new Exception("Бронирование пропущено, возврат невозможен!"));
+            throw new RuntimeException("Бронирование пропущено, возврат невозможен!");
         }
-        
+
         bookRepo.deleteById(email, passport, id);
         passengerRepo.deleteById((Integer) a);
     }
