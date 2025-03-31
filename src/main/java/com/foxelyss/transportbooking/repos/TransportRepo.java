@@ -62,8 +62,8 @@ public class TransportRepo {
         return jdbcTemplate.update(sql, id);
     }
 
-    public List<TransportingResult> findByDest(int dep_point, int arr_point, int quantity, long wanted_time, int page) {
-        String sequel = """
+    public List<TransportingResult> findByDestination(int dep_point, int arr_point, int quantity, long wanted_time, int page) {
+        final String sequel = """
                 select transportation.id,
                 transportation.name,
                 transportation.arrival,
@@ -98,8 +98,8 @@ public class TransportRepo {
                 }, dep_point, arr_point, wanted_time, quantity, page);
     }
 
-    public List<TransportingResult> findByDest(int dep_point, int arr_point, int quantity, long wanted_time, int mean, int page) {
-        String sequel = """
+    public List<TransportingResult> findByDestination(int dep_point, int arr_point, int quantity, long wanted_time, int mean, int page) {
+        final String sequel = """
                 select transportation.id,
                 transportation.name,
                 transportation.arrival,

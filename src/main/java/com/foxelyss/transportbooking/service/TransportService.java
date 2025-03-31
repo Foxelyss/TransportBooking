@@ -32,9 +32,9 @@ public class TransportService {
 
     public List<TransportingResult> findByDest(int dep_point, int arr_point, int quantity, long wanted_time, int mean, int page) {
         if (mean == -1) {
-            return transportRepo.findByDest(dep_point, arr_point, quantity, wanted_time, page);
+            return transportRepo.findByDestination(dep_point, arr_point, quantity, wanted_time, page);
         } else {
-            return transportRepo.findByDest(dep_point, arr_point, quantity, wanted_time, mean, page);
+            return transportRepo.findByDestination(dep_point, arr_point, quantity, wanted_time, mean, page);
         }
 
     }
