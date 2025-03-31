@@ -7,6 +7,7 @@ import com.foxelyss.transportbooking.repos.PassengerRepo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.UncategorizedSQLException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +20,13 @@ public class BookService {
     private PassengerRepo passengerRepo;
 
     public void createItem(Passenger passenger, int transporting) {
-        int rows = bookRepo.allocatePlace(transporting);
+        int rows = 0;
+        
+        try {
+            rows = bookRepo.allocatePlace(transporting);
+        } catch (UncategorizedSQLException e) {
+            throw new RuntimeException("Все места заняты!");
+        }
 
         if (rows == 0) {
             throw new RuntimeException("Рейс в прошлом или не найден!");

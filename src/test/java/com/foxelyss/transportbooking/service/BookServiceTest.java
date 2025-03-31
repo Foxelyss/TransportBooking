@@ -88,7 +88,7 @@ class BookServiceTest {
     @Test
     void ShouldNotBook_notEnoughSpace() {
         Exception e = assertThrows(Exception.class, () -> bookService.createItem(testificate, 3));
-        assertEquals("Рейс в прошлом или не найден!", e.getMessage());
+        assertEquals("Все места заняты!", e.getMessage());
     }
 
     @AfterEach
