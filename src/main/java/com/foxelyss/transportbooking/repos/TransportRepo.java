@@ -53,12 +53,16 @@ public class TransportRepo {
     }
 
     public int save(Transporting item) {
-        String sql = "INSERT INTO items (name) VALUES (?)";
-        return jdbcTemplate.update(sql, item.name());
+        String sql = "INSERT INTO transportation VALUES (null, ?,?,?,?, ?,?,?,?, ?)";
+        return jdbcTemplate.update(sql, item.name(),
+                item.departure().getTime() / 1000, item.arrival().getTime() / 1000,
+                item.departurePoint(), item.arrivalPoint(),
+                item.transportingMean(), item.company(), item.price(),
+                item.placeCount(), item.freePlaceCount());
     }
 
     public int deleteById(Long id) {
-        String sql = "DELETE FROM items WHERE id = ?";
+        String sql = "DELETE FROM transportation WHERE id = ?";
         return jdbcTemplate.update(sql, id);
     }
 
