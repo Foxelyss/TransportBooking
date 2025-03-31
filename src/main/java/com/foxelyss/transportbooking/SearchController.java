@@ -41,7 +41,8 @@ public class SearchController {
                                                        @RequestParam(value = "point_b") int point_b,
                                                        @RequestParam(value = "quantity", defaultValue = "15") int quantity,
                                                        @RequestParam(value = "wanted_time", defaultValue = "0") long wanted_time,
-                                                       @RequestParam(value = "mean", defaultValue = "-1") int mean) {
-        return transportService.findByDest(point_a, point_b, quantity, wanted_time, mean);
+                                                       @RequestParam(value = "mean", defaultValue = "-1") int mean,
+                                                       @RequestParam(value = "page", defaultValue = "0") int page) {
+        return transportService.findByDest(point_a, point_b, quantity, wanted_time, mean, page);
     }
 }

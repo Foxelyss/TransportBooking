@@ -62,7 +62,7 @@ public class TransportRepo {
         return jdbcTemplate.update(sql, id);
     }
 
-    public List<TransportingResult> findByDest(int dep_point, int arr_point, int quantity, long wanted_time) {
+    public List<TransportingResult> findByDest(int dep_point, int arr_point, int quantity, long wanted_time, int page) {
         String sequel = """
                 select transportation.id,
                 transportation.name,
@@ -82,7 +82,7 @@ public class TransportRepo {
                 inner join transportingmeans on transportation.transporting_mean = transportingmeans.id
                 where a1.id = ? and a2.id = ? and departure > unixepoch()
                 ORDER BY ABS(departure - ?)
-                limit ?
+                limit ? offset ?
                 """;
         if (quantity < 1 || quantity > 15) {
             quantity = 15;
@@ -95,10 +95,10 @@ public class TransportRepo {
                             rs.getString("start_point"), rs.getString("end_point"), arr_point, dep_point,
                             rs.getFloat("price"), rs.getString("mean"),
                             rs.getString("company_name"), rs.getInt("place_count"), rs.getInt("free_place_count"));
-                }, dep_point, arr_point, wanted_time, quantity);
+                }, dep_point, arr_point, wanted_time, quantity, page);
     }
 
-    public List<TransportingResult> findByDest(int dep_point, int arr_point, int quantity, long wanted_time, int mean) {
+    public List<TransportingResult> findByDest(int dep_point, int arr_point, int quantity, long wanted_time, int mean, int page) {
         String sequel = """
                 select transportation.id,
                 transportation.name,
@@ -118,7 +118,7 @@ public class TransportRepo {
                 inner join transportingmeans on transportation.transporting_mean = transportingmeans.id
                 where a1.id = ? and a2.id = ? and departure > unixepoch() and transporting_mean = ?
                 ORDER BY ABS(departure - ?)
-                limit ?
+                limit ? offset ?
                 """;
         if (quantity < 1 || quantity > 15) {
             quantity = 15;
@@ -131,6 +131,6 @@ public class TransportRepo {
                             rs.getString("start_point"), rs.getString("end_point"), arr_point, dep_point,
                             rs.getFloat("price"), rs.getString("mean"),
                             rs.getString("company_name"), rs.getInt("place_count"), rs.getInt("free_place_count"));
-                }, dep_point, arr_point, mean, wanted_time, quantity);
+                }, dep_point, arr_point, mean, wanted_time, quantity, page);
     }
 }
