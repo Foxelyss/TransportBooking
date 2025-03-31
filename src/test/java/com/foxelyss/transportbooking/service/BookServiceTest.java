@@ -85,6 +85,12 @@ class BookServiceTest {
         assertEquals(0, tickets.size());
     }
 
+    @Test
+    void ShouldNotBook_notEnoughSpace() {
+        Exception e = assertThrows(Exception.class, () -> bookService.createItem(testificate, 3));
+        assertEquals("Рейс в прошлом или не найден!", e.getMessage());
+    }
+
     @AfterEach
     void tearDown() {
         JdbcTestUtils.deleteFromTables(jdbcTemplate, "Passenger", "book");
