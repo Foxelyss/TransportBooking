@@ -7,11 +7,8 @@ import com.foxelyss.transportbooking.service.PointService;
 import com.foxelyss.transportbooking.service.TransportService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -41,11 +38,7 @@ public class BookController {
                             @RequestParam(value = "passport") long passport,
                             @RequestParam(value = "phone") long phone) {
 
-        try {
-            bookService.createItem(new Passenger(phone, email, surname, name, middle_name, passport), transporting);
-        } catch (Exception e) {
-            return e.getMessage();
-        }
+        bookService.createItem(new Passenger(phone, email, surname, name, middle_name, passport), transporting);
 
         return "Success";
     }
@@ -54,11 +47,15 @@ public class BookController {
     public String ReturnTicket(@RequestParam(value = "email") String email,
                                @RequestParam(value = "passport") long passport,
                                @RequestParam(value = "id") long id) {
-        try {
-            bookService.deleteItem(email, passport, id);
-        } catch (Exception e) {
-            return e.getMessage();
-        }
+
+        bookService.deleteItem(email, passport, id);
+
         return "Success";
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler
+    public String handleException(Exception ex) {
+        return ex.getMessage();
     }
 }

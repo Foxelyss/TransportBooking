@@ -21,7 +21,7 @@ public class BookService {
 
     public void createItem(Passenger passenger, int transporting) {
         int rows = 0;
-        
+
         try {
             rows = bookRepo.allocatePlace(transporting);
         } catch (UncategorizedSQLException e) {
@@ -32,7 +32,13 @@ public class BookService {
             throw new RuntimeException("Рейс в прошлом или не найден!");
         }
 
-        Number a = passengerRepo.save(passenger);
+        Number a;
+
+        try {
+            a = passengerRepo.save(passenger);
+        } catch (UncategorizedSQLException e) {
+            throw new RuntimeException("Фамилия и имя не могут быть одинаковыми!");
+        }
 
         bookRepo.save((Integer) a, transporting);
     }
