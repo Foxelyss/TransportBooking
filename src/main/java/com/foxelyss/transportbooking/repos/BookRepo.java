@@ -72,9 +72,9 @@ public class BookRepo {
     }
 
     public record Ticket(int id, String name, int transporting,
-                         Timestamp departure, String startPoint,
+                         Timestamp start, Timestamp end, String startPoint,
                          String endPoint, float price,
-                         String mean, String companyName,
+                         String mean, String company,
                          String payment
     ) {
     }
@@ -85,6 +85,7 @@ public class BookRepo {
                 transportation.id as transporting,
                 transportation.name,
                 transportation.departure,
+                transportation.arrival,
                 transportation.price,
                 transportation.place_count,
                 transportation.free_place_count,
@@ -111,6 +112,7 @@ public class BookRepo {
                     , rs.getString("name")
                     , rs.getInt("transporting")
                     , new Timestamp(rs.getLong("departure") * 1000)
+                    , new Timestamp(rs.getLong("arrival") * 1000)
                     , rs.getString("start_point")
                     , rs.getString("end_point")
                     , rs.getFloat("price")
