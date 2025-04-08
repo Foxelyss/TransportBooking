@@ -58,7 +58,7 @@ for i in range(500):
     places = randrange(1, 100)
 
     random_date_in_future = int(datetime.now().timestamp()) + randrange(86400, 5184000)
-    random_date_in_future_next = int(datetime.now().timestamp()) + randrange(5200, 57600)
+    random_date_in_future_next = random_date_in_future + randrange(5200, 57600)
 
     price = randrange(10000,6500000) / 100
 
