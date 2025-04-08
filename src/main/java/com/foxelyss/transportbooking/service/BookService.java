@@ -34,11 +34,7 @@ public class BookService {
 
         Number a;
 
-        try {
-            a = passengerRepo.save(passenger);
-        } catch (UncategorizedSQLException e) {
-            throw new RuntimeException("Фамилия и имя не могут быть одинаковыми!");
-        }
+        a = passengerRepo.save(passenger);
 
         bookRepo.save((Integer) a, transporting);
     }
