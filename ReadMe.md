@@ -48,16 +48,20 @@ final serverURI = 'адрес:8080';
 
 В приложении можно просматривать транспорт, выискивать ближайший к определённому времени, виду транспорта.
 
-![image](https://github.com/user-attachments/assets/9cb85835-56a4-404c-a6e6-e74e9feb3598)
+![Screenshot_20250411-191241](https://github.com/user-attachments/assets/33432e14-dd74-4e78-ae40-aaa05491d031)
 
 Найдём транспорт и забронируем место
 
-![image](https://github.com/user-attachments/assets/c0178c79-6da9-463f-a88d-5c74b86eecb3)
-![image](https://github.com/user-attachments/assets/811ae1d1-6737-4a56-a235-9055cc28acbe)
+![Screenshot_20250411-205021](https://github.com/user-attachments/assets/791c1a6b-ee1d-4ffd-9f74-127ca1b3dd81)
+![Screenshot_20250411-191250](https://github.com/user-attachments/assets/88289733-0d4f-43cd-aa62-1ac7d5563487)
+![Screenshot_20250411-205643(2)](https://github.com/user-attachments/assets/1166e33b-969a-4d54-9db8-990e925376f3)
 
-![image](https://github.com/user-attachments/assets/52a91171-0c1d-4b6c-b819-b115c6ef2a57)
+
+![Screenshot_20250411-191253](https://github.com/user-attachments/assets/f2050dbd-ac69-4ea0-ba1c-508e7a7e1976)
+![Screenshot_20250411-191257](https://github.com/user-attachments/assets/8e29e6ae-80e2-4c64-ab15-adc4015f9ffc)
 
 Чтобы просмотреть ваши билеты, воспользуйтесь вкладкой кабинет
 
-![image](https://github.com/user-attachments/assets/21f82cab-0415-45ee-b488-2b60209a9a20)
-![image](https://github.com/user-attachments/assets/1ccb0a2d-7dab-490a-b138-82f668f217f4)
+![Screenshot_20250411-191302](https://github.com/user-attachments/assets/9d5b37d4-52b9-4f76-b23c-9e3c855cc289)
+![Screenshot_20250411-191355](https://github.com/user-attachments/assets/8bec3eea-1b90-4441-89a8-87be0c19b1e4)
+![Screenshot_20250411-191357](https://github.com/user-attachments/assets/2558052d-efd0-40e4-acae-e61150767d89)
