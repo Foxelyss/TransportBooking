@@ -44,7 +44,8 @@ class BookServiceTest {
 
     @Test
     void shouldNotBook() {
-        Exception e = assertThrows(Exception.class, () -> bookService.createItem(testificate, 2));
+        BookingException e = assertThrows(BookingException.class, () -> bookService.createItem(testificate, 2));
+        assertEquals(BookingException.ErrorType.CantBeBooked, e.getErrorType());
         assertEquals("Рейс в прошлом или не найден!", e.getMessage());
     }
 
@@ -63,7 +64,8 @@ class BookServiceTest {
     void shouldNotReturnBook() {
         List<BookRepo.Ticket> tickets = bookService.findAllByDetails("unknown@example.com", 123);
 
-        Exception e = assertThrows(Exception.class, () -> bookService.deleteItem(testificate.Email(), testificate.passport(), tickets.getFirst().id()));
+        BookingException e = assertThrows(BookingException.class, () -> bookService.deleteItem(testificate.Email(), testificate.passport(), tickets.getFirst().id()));
+        assertEquals(BookingException.ErrorType.CantBeReturned, e.getErrorType());
         assertEquals("Бронирование пропущено, возврат невозможен!", e.getMessage());
     }
 
@@ -86,8 +88,9 @@ class BookServiceTest {
     }
 
     @Test
-    void ShouldNotBook_notEnoughSpace() {
-        Exception e = assertThrows(Exception.class, () -> bookService.createItem(testificate, 3));
+    void shouldNotBook_notEnoughSpace() {
+        BookingException e = assertThrows(BookingException.class, () -> bookService.createItem(testificate, 3));
+        assertEquals(BookingException.ErrorType.SpaceAllocation, e.getErrorType());
         assertEquals("Все места заняты!", e.getMessage());
     }
 

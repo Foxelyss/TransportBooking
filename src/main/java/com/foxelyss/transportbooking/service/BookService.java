@@ -25,11 +25,11 @@ public class BookService {
         try {
             rows = bookRepo.allocatePlace(transporting);
         } catch (UncategorizedSQLException e) {
-            throw new RuntimeException("Все места заняты!");
+            throw new BookingException(BookingException.ErrorType.SpaceAllocation);
         }
 
         if (rows == 0) {
-            throw new RuntimeException("Рейс в прошлом или не найден!");
+            throw new BookingException(BookingException.ErrorType.CantBeBooked);
         }
 
         Number a;
@@ -45,7 +45,7 @@ public class BookService {
         try {
             a = bookRepo.getRecordForBook(email, passport, id);
         } catch (EmptyResultDataAccessException e) {
-            throw new RuntimeException("Бронирование пропущено, возврат невозможен!");
+            throw new BookingException(BookingException.ErrorType.CantBeReturned);
         }
 
         bookRepo.deleteById(email, passport, id);

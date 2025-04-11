@@ -3,9 +3,12 @@ package com.foxelyss.transportbooking;
 import com.foxelyss.transportbooking.model.Passenger;
 import com.foxelyss.transportbooking.repos.BookRepo;
 import com.foxelyss.transportbooking.service.BookService;
+import com.foxelyss.transportbooking.service.BookingException;
 import com.foxelyss.transportbooking.service.PointService;
 import com.foxelyss.transportbooking.service.TransportService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +24,8 @@ public class BookController {
     PointService pointService;
     @Autowired
     BookService bookService;
+    
+    Logger logger = LoggerFactory.getLogger(BookController.class);
 
     @GetMapping("/books")
     public List<BookRepo.Ticket> GetTicketsForUser(
@@ -55,7 +60,15 @@ public class BookController {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler
-    public String handleException(Exception ex) {
+    public String handleBookingException(BookingException ex) {
         return ex.getMessage();
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler
+    public void handleException(Exception ex) {
+        logger.error(ex.getMessage());
+    }
+
+
 }
