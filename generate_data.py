@@ -18,11 +18,17 @@
 from datetime import datetime
 from random import randrange
 
-print("Записываю в файл миграции V999__insert-data.sql")
-if input("Y/n :").upper() not in ('Y', ''):
-    exit()
+print("Записываю в файл миграции V999__insert-data.sql тестовые данные?")
 
-with open("src/main/resources/db/migration/V999__insert-data.sql", "w") as file:
+filename = "src/main/resources/db/migration/V999__insert-data.sql"
+migration = True
+
+if input("Y/n :").upper() not in ('Y', ''):
+    filename = "data.sql"
+    migration = False
+
+
+with open(filename, "w") as file:
     print("insert into point values (null,'г. Томск','Томская область','Томск');",file=file)
     print("insert into point values (null,'г. Новосибирск','Новосибирская область','Новосибирск') ;",file=file)
     print("insert into point values (null,'г. Казань','Казанская область','Казань') ;",file=file)
@@ -47,8 +53,8 @@ with open("src/main/resources/db/migration/V999__insert-data.sql", "w") as file:
     print("insert into TransportingMeans values(null,'Ж/Д+Автобус');",file=file)
     print("insert into TransportingMeans values(null,'Ж/Д+Самолёт');",file=file)
 
-
-    print("BEGIN TRANSACTION;",file=file)
+    if not migration:
+        print("BEGIN TRANSACTION;",file=file)
 
     for i in range(500):
         city = randrange(1, 11)
@@ -71,5 +77,6 @@ with open("src/main/resources/db/migration/V999__insert-data.sql", "w") as file:
 
         print("insert into transportation values (null", name, random_date_in_future, random_date_in_future_next,
             city, end_city, mean, company, price, places, places, sep=", ", end=");\n",file=file)
-
-    print("COMMIT;",file=file)
+    
+    if not migration:
+        print("COMMIT;",file=file)
