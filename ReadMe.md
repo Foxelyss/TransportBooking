@@ -3,10 +3,12 @@
 ## Бэкенд
 
 Зависимости:
-gradle, sqlite3
+`gradle`, `sqlite3`
+Зависимости скрипта:
+`python 3.9`
 
-Для начала работы надо инициировать базу данных, для этого:
-`sqlite3 databases/database.db ".read src/main/resources/schema.sql" ".read data.sql"`
+Для начала работы надо инициировать базу данных, для этого выполните скрипт:
+`./initDBwithTestData.sh`
 (Можно пропустить этот шаг, но тогда тестовых данных **не будет**)
 
 Затем запустить сервер
@@ -16,11 +18,11 @@ gradle, sqlite3
 Код сервера находится здесь, в текущей папке.
 
 Команда для теста:
-`test.sh`
+`./test.sh`
 
 Для использования docker контейнера:
 
-1. `build-docker.sh` - Для сборки
+1. `build-docker.sh` - Для сборки(спросит желаете ли вы иметь тестовые данные)
 2. `start-docker.sh` - Старта
 
 ## Фронтенд
@@ -55,7 +57,6 @@ final serverURI = 'адрес:8080';
 ![Screenshot_20250411-205021](https://github.com/user-attachments/assets/791c1a6b-ee1d-4ffd-9f74-127ca1b3dd81)
 ![Screenshot_20250411-191250](https://github.com/user-attachments/assets/88289733-0d4f-43cd-aa62-1ac7d5563487)
 ![Screenshot_20250411-205643(2)](https://github.com/user-attachments/assets/1166e33b-969a-4d54-9db8-990e925376f3)
-
 
 ![Screenshot_20250411-191253](https://github.com/user-attachments/assets/f2050dbd-ac69-4ea0-ba1c-508e7a7e1976)
 ![Screenshot_20250411-191257](https://github.com/user-attachments/assets/8e29e6ae-80e2-4c64-ab15-adc4015f9ffc)
