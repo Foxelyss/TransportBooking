@@ -10,6 +10,6 @@ RUN mkdir -p /app/databases && chown -R spring:spring /app/databases
 USER spring:spring
 
 RUN chmod +rw -R /app/databases
-ARG JAR_FILE=build/libs/transportbooking-0.2.4.jar
+ARG JAR_FILE=build/libs/transportbooking-0.2.5.jar
 COPY ${JAR_FILE} app.jar
 ENTRYPOINT ["java","-jar","/app/app.jar"]

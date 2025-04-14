@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'com.foxelyss'
-version = '0.2.4'
+version = '0.2.5'
 
 java {
     toolchain {
@@ -21,7 +21,6 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-//    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.xerial:sqlite-jdbc'
     implementation 'io.jsonwebtoken:jjwt-api:0.12.6'
     implementation 'io.jsonwebtoken:jjwt-impl:0.12.6'
