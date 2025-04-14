@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.4.2'
     id 'io.spring.dependency-management' version '1.1.7'
+    id "org.flywaydb.flyway" version "10.15.2"
 }
 
 group = 'com.foxelyss'
@@ -26,7 +27,7 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-impl:0.12.6'
     implementation 'io.jsonwebtoken:jjwt-jackson:0.12.6'
     implementation 'org.json:json:20240303'
-
+    implementation 'org.flywaydb:flyway-core'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
@@ -35,6 +36,12 @@ dependencies {
 }
 
 tasks.named('test') {
-    delete(files("${project.projectDir}/test-database.db"))
+    delete(files("${project.projectDir}/databases/test-database.db"))
     useJUnitPlatform()
+}
+
+flyway {
+    url = "jdbc:sqlite:${project.projectDir}/databases/database.db"
+    user = 'root'
+    password = ''
 }
