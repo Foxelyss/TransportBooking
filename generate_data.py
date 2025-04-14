@@ -1,19 +1,4 @@
-# create table Transportation (
-#     id INTEGER primary key,
-#     name CHAR(128) not null,
-#     departure TIMESTAMP not null,
-#     arrival TIMESTAMP not null,
-#     departure_point INTEGER references point (id) not null,
-#     arrival_point INTEGER references point (id) not null,
-#     transporting_mean INTEGER references transportingmeans (id) not null,
-#     company INTEGER references company (id),
-#     price UNSIGNED not null,
-#     place_count UNSIGNED not null,
-#     free_place_count UNSIGNED not null check(
-#         free_place_count between 0 and place_count
-#     )
-# );
-
+#!/bin/env python3
 
 import argparse
 from datetime import datetime
