@@ -2,11 +2,12 @@
 
 ./gradlew test || exit_on_error "Тесты не пройдены";
 
-python3 generate_data.py;
+FILE="src/main/resources/db/migration/V999__insert-data.sql"
+python3 generate_data.py $FILE true;
 
 # Если мы делаем миграцию с данными, то тесты не будут пройдены, т.к. id транспорта сдвинется, поэтому мы проходим тесты
 # до сборки контейнера
 ./gradlew build -x test;
-rm src/main/resources/db/migration/V999__insert-data.sql;
+rm $FILE;
 
 docker build -t transportbooking-docker .;

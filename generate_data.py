@@ -15,18 +15,17 @@
 # );
 
 
+import argparse
 from datetime import datetime
 from random import randrange
 
-print("Записываю в файл миграции V999__insert-data.sql тестовые данные?")
+parser = argparse.ArgumentParser("Генератор тестовых данных")
+parser.add_argument("filepath", help="Путь к файлу", type=str)
+parser.add_argument("migration", help="Миграция ли?", type=str)
+args = parser.parse_args()
 
-filename = "src/main/resources/db/migration/V999__insert-data.sql"
-migration = True
-
-if input("Y/n :").upper() not in ('Y', ''):
-    filename = "data.sql"
-    migration = False
-
+filename = args.filepath
+migration = args.migration.lower() == "true"
 
 with open(filename, "w") as file:
     print("insert into point values (null,'г. Томск','Томская область','Томск');",file=file)

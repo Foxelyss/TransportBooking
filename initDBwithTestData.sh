@@ -2,6 +2,6 @@
 
 ./gradlew flywayMigrate;
 
-echo no | python3 generate_data.py > /dev/null;
+python3 generate_data.py data.sql false > /dev/null;
 printf "\nЗаписываю тестовые данные в основной файл БД..."
 sqlite3 databases/database.db ".read data.sql";
