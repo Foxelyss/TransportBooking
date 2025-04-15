@@ -14,7 +14,7 @@ filename = args.filepath
 migration = args.migration
 
 with open(filename, "w") as file:
-    file.write("/* Тестовые данные для наполнения БД*/")
+    file.write("/* Тестовые данные для наполнения БД */")
     file.write("\ninsert into point values (null,'г. Томск','Томская область','Томск');")
     file.write("\ninsert into point values (null,'г. Новосибирск','Новосибирская область','Новосибирск') ;")
     file.write("\ninsert into point values (null,'г. Казань','Казанская область','Казань') ;")
@@ -37,10 +37,10 @@ with open(filename, "w") as file:
     file.write("\ninsert into TransportingMeans values(null,'Автобусом');")
     file.write("\ninsert into TransportingMeans values(null,'Самолётом');")
     file.write("\ninsert into TransportingMeans values(null,'Ж/Д+Автобус');")
-    file.write("\ninsert into TransportingMeans values(null,'Ж/Д+Самолёт');")
+    file.write("\ninsert into TransportingMeans values(null,'Ж/Д+Самолёт');\n")
 
     if not migration:
-        file.write("BEGIN TRANSACTION;")
+        file.write("\nBEGIN TRANSACTION;")
 
     for i in range(500):
         city = randrange(1, 11)
